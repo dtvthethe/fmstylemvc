@@ -1,0 +1,68 @@
+﻿@using FMStyle.Areas.Admin.Models;
+@using FMStyle.Libraries;
+@model List<phuong_thuc_thanh_toan>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+<div class="space"></div>
+@Html.Raw(ViewBag.error)
+
+<div class="col w10 last">
+    <div class="content">
+        <div class="box header">
+            <div class="head"><div></div></div>
+            <h2>Phương thức thanh toán</h2>
+            <div class="desc">
+                <form action="" method="post">
+                    <div class="tool">
+                        <input type="submit" class="btnx" name="btnDel" onclick="return confirm('Bạn có muốn xóa các phương thức thanh toán đã chọn không?');" value="Xóa" />
+                        <input type="button" class="btn" name="addPT" value="Thêm phương thức thanh toán" onclick="btn_ThemClick()" />
+                    </div>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th class="checkbox">
+                                    <input type="checkbox" name="allChk" onclick="selectAll(this, 'ckb');" />All
+                                </th>
+                                <th class="stt">STT</th>
+                                <th class="hinhanh">Role</th>
+
+                            </tr>
+                            @for (int i = 0; i < Model.Count; i++)
+            {
+                                <tr>
+                                    <td class="checkbox">
+                                        <input id="" type="checkbox" class="ckb" name="@i" value="@Model[i].id_pt">
+                                    </td>
+                                    <td>@(i + 1)</td>
+                                    <td>
+                                        <a href="/admin/thong-tin-phuong-thuc-@Lib.VietNamToEnglish(Model[i].ten_phuongthuc)-@Model[i].id_pt&#46;html">@Model[i].ten_phuongthuc</a>
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <div class="bottom"><div></div></div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function selectAll(invoker, className) {
+        var inputElements = document.getElementsByClassName(className);
+        for (var i = 0; i < inputElements.length; i++) {
+            var myElement = inputElements[i];
+            if (myElement.type === "checkbox") {
+                myElement.checked = invoker.checked;
+            }
+        }
+    }
+
+    function btn_ThemClick() {
+        window.location.href = "/admin/them-phuong-thuc-thanh-toan.html";
+    }
+</script>

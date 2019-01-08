@@ -1,0 +1,62 @@
+﻿@using FMStyle.Areas.Admin.Models;
+@using FMStyle.Libraries;
+@model List<object>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+    danhmuc danhMuc = (danhmuc)Model[0];
+    List<danhmuc> listDanhmuc = (List<danhmuc>)Model[1];
+}
+
+<div class="space"></div>
+@Html.Raw(ViewBag.error)
+
+<div class="col w10 last">
+    <div class="content">
+        <div class="box header">
+            <div class="head"><div></div></div>
+            <h2>Thông tin danh mục:</h2>
+            <div class="desc">
+                <form action="" method="post">
+
+                    <table>
+                        <tr>
+                            <td style="width: 139px">Tên danh mục con:</td>
+                            <td>
+                                <input type="text" id="txtTen" name="txtTen" class="text w_20" maxlength="100" width="200" required value="@danhMuc.ten_danhmuc" />
+                                <input type="hidden" name="hdId" value="@danhMuc.id_danhmuc" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="width: 139px">Danh mục cha:</td>
+                            <td>
+                                <select name="cmbDanhMuc" class="cmb">
+                                    @foreach (var item in listDanhmuc)
+                                    {
+                                        if (item.groupdanhmuc == Lib.convertToDouble(Convert.ToDouble(danhMuc.groupdanhmuc - 0.1)))
+                                        {
+                                            <option value="@item.groupdanhmuc" selected="selected">@item.ten_danhmuc</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.groupdanhmuc">@item.ten_danhmuc</option>
+                                        }
+                                    }
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 139px"></td>
+                            <td>
+                                <input type="submit" name="btnAdd" value="Lưu lại" class="btn" />
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+
+
+            </div>
+            <div class="bottom"><div></div></div>
+        </div>
+    </div>
+</div>

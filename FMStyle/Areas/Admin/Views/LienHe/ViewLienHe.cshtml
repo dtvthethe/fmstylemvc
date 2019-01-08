@@ -1,0 +1,53 @@
+﻿@using FMStyle.Areas.Admin.Models;
+@model lien_he
+@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+<div class="space"></div>
+@Html.Raw(ViewBag.error)
+
+<div class="col w10 last">
+    <div class="content">
+        <div class="box header">
+            <div class="head"><div></div></div>
+            <h2>Chi tiết liên hệ</h2>
+            <div class="desc">
+                <form action="" method="post">
+                    <table>
+                        <tr>
+                            <td style="width: 141px">Họ và tên:</td>
+                            <td>
+                                @Model.hoten
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 141px">Email:</td>
+                            <td>
+                                @Model.email
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 141px">Số điện thoại:</td>
+                            <td>
+                                @Model.sdt
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 141px">Ngày gửi:</td>
+                            <td>
+                                @Model.ngaygui
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="background-color:#fff; border:1px solid">
+                                @Html.Raw(Model.noidung)
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="bottom"><div></div></div>
+        </div>
+    </div>
+</div>

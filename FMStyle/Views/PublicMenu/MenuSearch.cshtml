@@ -1,0 +1,17 @@
+﻿@using FMStyle.Models;
+@using FMStyle.Libraries;
+@model List<danhmuc>
+<select id="cmbSearch" class="search_se">
+    <option value="0">Tất cả</option>
+    @for(int i=1; i< Model.Count(); i++)
+    {
+        if (Model[i-1].id_danhmuc == ViewBag.current)
+        {
+            <option data-title="@Lib.VietNamToEnglish(Model[i-1].ten_danhmuc)" value="@Model[i-1].id_danhmuc" selected="selected">@Model[i - 1].ten_danhmuc</option>
+        }
+        else
+        {
+            <option data-title="@Lib.VietNamToEnglish(Model[i-1].ten_danhmuc)" value="@Model[i-1].id_danhmuc">@Model[i - 1].ten_danhmuc</option>
+        }
+    }
+</select>

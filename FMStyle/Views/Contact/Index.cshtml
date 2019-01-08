@@ -1,0 +1,61 @@
+﻿@{
+    Layout = "~/Views/Shared/PublicTemplate.cshtml";
+}
+
+
+<h4><a style="color: #01c4c4" href="/">Trang chủ</a>/ Liên hệ</h4>
+<div class="title">
+    <h3 class="title-names">Liên hệ</h3>
+</div>
+<fieldset style="margin: 70px auto; border-radius:7px; border: 1px solid #01c4c4;width: 700px">
+    <legend style="color:#01c4c4; font-weight:bold; margin-left:15px">Liên hệ</legend>
+    <form action="" method="post">
+        <table class="tbLienHe" style="width: 96%;">
+            <tr>
+                <td class="td-left-tbLienHe">Họ và tên (<span style="color: red">*</span>):</td>
+                <td class="">
+                    <input type="text" class="cinput" name="txtHoTen" maxlength="100" height="29" width="250" @Html.Raw(ViewBag.name) required />
+                </td>
+            </tr>
+            <tr>
+                <td>Địa chỉ</td>
+                <td>
+                    <textarea name="txtDiaChi" class="cinput" maxlength="200" height="29" width="250"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td>
+                    <input type="email" name="txtEmail" maxlength="100" height="29" width="250" class="cinput" />
+                </td>
+            </tr>
+            <tr>
+                <td>Số điện thoại:</td>
+                <td>
+                    <input type="text" name="txtSDT" maxlength="11" class="cinput" height="29" width="250" pattern="^(0\d{9,10})$" title="Đây không phải là số điện thoại" />
+                </td>
+            </tr>
+            <tr>
+                <td>Nội dung (<span style="color: red">*</span>):</td>
+                <td>
+                    <textarea name="txtNoiDung" id="txtNoiDung"  rows="7" cols="80" class="ckeditor" required></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td id="messenger">
+                    @Html.Raw(ViewBag.error)
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" name="btnGui" value="Gửi" class="cinputb" style="width: 101px;" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</fieldset>
+<script src="~/Scripts/ckeditor_basic/ckeditor.js"></script>
+<script>
+</script>

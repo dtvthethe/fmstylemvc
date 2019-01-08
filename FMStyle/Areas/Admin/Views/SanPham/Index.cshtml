@@ -1,0 +1,197 @@
+﻿@using FMStyle.Areas.Admin.Models;
+@using FMStyle.Libraries
+@using FMStyle.Config
+@model List<san_pham>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+<div class="space"></div>
+@Html.Raw(ViewBag.error)
+
+<div class="col w10 last">
+    <div class="content">
+        <div class="box header">
+            <div class="head"><div></div></div>
+            <h2>Thêm người dùng</h2>
+            <div class="desc">
+                <form action="~/SanPham/Index" method="post" onsubmit="">
+                    <div class="tool">
+                        <input type="submit" id="btnCapNhat" class="btnx" name="btnCapNhat" value="Cập nhật" onclick="return confirm('Thao tác này sẽ xóa và cập nhật sản phẩm khuyến mãi. Bạn có muốn lưu lại không?')" />
+                        <input type="button" id="btnThem" class="btn" value="Thêm sản phẩm" onclick="btn_ThemClick()" />
+                        @*tim kiem*@
+                        <div class="nav-timkiem">
+                            Tìm kiếm:
+                            <input type="text" name="txtTimKiem" id="txtTimKiem" class="text w_20" placeholder="Tên sản phẩm..." value="@ViewBag.key" />
+                            <select name="cmbDanhMuc" id="cmbDanhMuc" class="cmb">
+                                <option value="@Conf.NONE_CATAGORY">Tất cả</option>
+                                @foreach (var item in (List<danhmuc>)ViewBag.DanhMuc)
+                                {
+                                    if (ViewBag.idTim == item.id_danhmuc)
+                                    {
+                                        <option value="@item.id_danhmuc" selected="selected" data-key="@Lib.VietNamToEnglish(item.ten_danhmuc)">@item.ten_danhmuc</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.id_danhmuc" data-key="@Lib.VietNamToEnglish(item.ten_danhmuc)">@item.ten_danhmuc</option>
+                                    }
+                                }
+                            </select>
+                            <input type="submit" id="btnTim" name="btnTim" class="btn" value="Tìm kiếm" />
+                            <ul class="listSeach" style="display:hidden"></ul>
+                        </div>
+                        @*end tim kiem*@
+                        Xem theo:
+                        <select name="" id="ddlView" class="cmb">
+                            <option value="@Conf.NONE_CATAGORY">Tất cả</option>
+                            @foreach (var item in (List<danhmuc>)ViewBag.DanhMuc)
+                            {
+                                if (ViewBag.idCat == item.id_danhmuc)
+                                {
+                                    <option value="@item.id_danhmuc" selected="selected" data-key="@Lib.VietNamToEnglish(item.ten_danhmuc)">@item.ten_danhmuc</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.id_danhmuc" data-key="@Lib.VietNamToEnglish(item.ten_danhmuc)">@item.ten_danhmuc</option>
+                                }
+                            }
+                        </select>
+
+                    </div>
+
+                    <span id="lbError" style="color: red;"></span>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th class="khuyenmai">
+                                    Xóa:<input type="checkbox" value="all" id="allCk" onclick="selectAll(this)" />
+
+                                </th>
+                                <th class="stt">STT</th>
+                                <th class="hinhanh">Hình ảnh</th>
+                                <th class="tenhoa">Tên sản phẩm</th>
+                                <th class="tenhoa">Số lượng</th>
+                                <th class="gia">Gía</th>
+                                <th class="khuyenmai">Khuyến mãi</th>
+                                <th class="khuyenmai">Ngày đăng</th>
+
+                            </tr>
+                            @for (int i = 0; i < Model.Count; i++)
+                            {
+                                <tr>
+                                    <td class="checkbox">
+                                        <span class="cbCheckDel">
+                                            <input id="" type="checkbox" class="ckb" name="@i&#46;del" value="@Model[i].id_sanpham">
+                                        </span>
+                                        <input type="hidden" name="@i" value="@Model[i].id_sanpham" />
+                                    </td>
+                                    <td>
+                                        <span id="">@(i + 1)</span>
+                                    </td>
+                                    <td>
+                                        <a href="/admin/thong-tin-san-pham-@Lib.VietNamToEnglish(Model[i].ten_sanpham)-@Model[i].id_sanpham&#46;html">
+                                            @if (Model[i].hinhanh.ToString() != "")
+                                            {
+                                                <img style="" width="70px" height="70px" alt="" src="~/uploads/@Model[i].hinhanh">
+                                            }
+                                            else
+                                            {
+                                                <img style="" width="70px" height="70px" alt="" src="~/Images/admin/noimage.jpg">
+                                            }
+                                        </a>
+                                    </td>
+                                    <td><a href="/admin/thong-tin-san-pham-@Lib.VietNamToEnglish(Model[i].ten_sanpham)-@Model[i].id_sanpham&#46;html">@Model[i].ten_sanpham</a></td>
+                                    <td>@Model[i].soluong</td>
+                                    <td>@Lib.convertToVietNamDong(Model[i].gia)</td>
+                                    <td>
+
+                                        @if (Model[i].khuyenmai == true)
+                                        {
+                                            <input type="checkbox" name="@i&#46;up" checked="checked" value="@Model[i].id_sanpham"></input>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" name="@i&#46;up" value="@Model[i].id_sanpham"></input>
+                                        }
+
+                                    </td>
+                                    <td>
+                                        @Model[i].ngaydang
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <div class="bottom"><div></div></div>
+        </div>
+    </div>
+</div>
+
+@Html.Raw(ViewBag.paging)
+
+<script type="text/javascript">
+    // check / uncheck all checkbox
+    function selectAll(invoker) {
+        var inputElements = document.getElementsByClassName('ckb');
+
+        for (var i = 0; i < inputElements.length; i++) {
+            var myElement = inputElements[i];
+            if (myElement.type === "checkbox") {
+                myElement.checked = invoker.checked;
+            }
+        }
+    }
+
+
+
+    // select cmbDanhMuc:
+    $("select#ddlView").change(function () {
+        if ($(this).val() != 0) {
+            window.location.href = "/admin/san-pham-danh-muc-" + $("#ddlView :selected").attr("data-key") + "-" + $(this).val() + ".html";
+        }
+        else {
+            window.location.href = "/admin/san-pham.html";
+        }
+
+    });
+
+    // check textBox:
+    function checkNulltextBox() {
+        var txtTimKiem = $("#txtTimKiem").val();
+        if (txtTimKiem != null) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    function btn_ThemClick() {
+        window.location.href = "/admin/them-san-pham.html";
+    }
+
+    $('#txtTimKiem').keyup(function () {
+        var txtKey = $('#txtTimKiem').val();
+        if (txtKey == "") {
+            $(".listSeach").hide();
+        }
+        else {
+            $(".listSeach").show();
+            var id = $("#cmbDanhMuc :selected").val();
+            $.ajax({
+                type: "POST",
+                url: "SanPham/AjaxLoadSearch",
+                data: { id: id, key: txtKey },
+                success: function (data) {
+                    $(".listSeach").html(data);
+                }
+            });
+        }
+
+    });
+
+
+</script>
+

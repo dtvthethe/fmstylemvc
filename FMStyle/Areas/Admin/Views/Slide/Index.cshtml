@@ -1,0 +1,82 @@
+﻿@using FMStyle.Areas.Admin.Models;
+@using FMStyle.Libraries;
+@model List<slide>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+<div class="space"></div>
+@Html.Raw(ViewBag.error)
+
+<div class="col w10 last">
+    <div class="content">
+        <div class="box header">
+            <div class="head"><div></div></div>
+            <h2>Slide</h2>
+            <div class="desc">
+                <form action="" method="post">
+                    <div class="tool">
+                        <input type="submit" class="btnx" name="btnDel" onclick="return confirm('Bạn có muốn lưu lại không?');" value="Lưu lại" />
+                        <input type="button" name="add" class="btn" value="Thêm slide" onclick="themSlide()" />
+                    </div>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th class="checkbox">
+                                    <input type="checkbox" name="allChk" onclick="selectAll(this, 'ckb');" />All
+                                </th>
+                                <th>STT</th>
+                                <th>Hình ảnh</th>
+                                <th>Link</th>
+                                <th>Vị trí</th>
+                            </tr>
+                            @for (int i = 0; i < Model.Count(); i++)
+                            {
+                                <tr>
+                                    <td class="checkbox">
+                                        <input id="" type="checkbox" class="ckb" name="@i&#46;del" value="@Model[i].id_slide">
+                                        <input type="hidden" name="@i&#46;hdId" value="@Model[i].id_slide">
+                                    </td>
+                                    <td>@(i + 1)</td>
+                                    <td>
+                                        @if (Model[i].hinhanh != null)
+                                        {
+                                            <img width="300px" height="130px" src="~/slide/@Model[i].hinhanh" alt="@Model[i].link" />
+                                        }
+                                        else
+                                        {
+                                            <img width="300px" height="130px" src="/Images/admin/noimage.jpg" alt="@Model[i].link" />
+                                        }
+                                    </td>
+                                    <td>
+                                        <input type="text" name="@i&#46;txtLink" class="text w_20"  value="@Model[i].link" required />
+                                    </td>
+                                    <td>
+                                        <input type="number" name="@i&#46;txtViTri" class="text w_20" value="@Model[i].vitri" required />
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <div class="bottom"><div></div></div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function selectAll(invoker, className) {
+        var inputElements = document.getElementsByClassName(className);
+        for (var i = 0; i < inputElements.length; i++) {
+            var myElement = inputElements[i];
+            if (myElement.type === "checkbox") {
+                myElement.checked = invoker.checked;
+            }
+        }
+    }
+
+    function themSlide() {
+        window.location.href = "/admin/them-slide.html";
+    }
+</script>

@@ -1,0 +1,148 @@
+﻿@{
+
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+@using FMStyle.Areas.Admin.Models;
+@using FMStyle.Config;
+@using FMStyle.Libraries;
+@model san_pham
+
+<div class="space"></div>
+@Html.Raw(ViewBag.error)
+
+<div class="col w10 last">
+    <div class="content">
+        <div class="box header">
+            <div class="head"><div></div></div>
+            <h2>Thông tin sản phẩm</h2>
+            <div class="desc">
+<form action="" method="post" enctype="multipart/form-data">
+    <table>
+
+        <tr>
+            <td>Tên sản phẩm:</td>
+            <td>
+                <input type="text" class="text w_20" id="txtTen" name="txtTen" maxlength="100" style="width:200px" required value="@Model.ten_sanpham" />
+                <input type="hidden" name="idHd" value="@Model.id_sanpham" />
+                <input type="hidden" name="tenHd" value="@Model.ten_sanpham" />
+            </td>
+        </tr>
+        <tr>
+            <td>Số lượng:</td>
+            <td>
+                <input type="number" class="text w_20" id="txtSoLuong" min="0" max="10000" name="txtSoLuong" style="width:200px" value="@Model.soluong" required />
+            </td>
+        </tr>
+        <tr>
+            <td>Hình ảnh:</td>
+            <td>
+                <div id="imagePost">
+                    @if (Model.hinhanh.ToString() != "")
+                    {
+                        <img width="100" src="~/uploads/@Model.hinhanh" alt="@Model.ten_sanpham" />
+                        <input type="button" id="btn_Xoa" name="btn_Xoa" value="Xóa hình này" onclick="deleteImage(@Model.id_sanpham)" />
+                    }
+                    else
+                    {
+                        <input type="file" id="file" name="file" />
+
+                    }
+                </div>
+                <span style="color:red">@ViewBag.file</span>
+            </td>
+        </tr>
+        <tr>
+            <td>Danh mục:</td>
+            <td>
+                <select name="cmbDanhMuc" class="cmb">
+                    @foreach (var item in (List<danhmuc>)ViewBag.DanhMuc)
+                    {
+                        if (item.id_danhmuc == Model.id_danhmuc)
+                        {
+                            <option value="@item.id_danhmuc" selected="selected">@item.ten_danhmuc</option>
+                        }
+                        else
+                        {
+                            <option value="@item.id_danhmuc">@item.ten_danhmuc</option>
+                        }
+
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Thông tin chi tiết:</td>
+            <td>
+
+                <textarea name="txtThongTinChiTiet" class="ckeditor">@Model.tt_chitiet</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>Gía:</td>
+            <td>
+                <input type="text" class="text w_20" id="txtGia" name="txtGia" style="width:200px" required value="@Model.gia" />
+                =><span id="giaSc"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>Khuyến mãi:</td>
+            <td>
+                @if (Model.khuyenmai == true)
+                {
+                    <input type="radio" id="chkKhuyenMaiF" name="chkKhuyenMai" value="false" />
+                    <label for="chkKhuyenMaiF">Không</label>
+
+                    <input type="radio" id="chkKhuyenMaiT" name="chkKhuyenMai" value="true" checked="checked" />
+                    <label for="chkKhuyenMaiT">Có</label>
+                }
+                else
+                {
+                    <input type="radio" id="chkKhuyenMaiF" name="chkKhuyenMai" value="false" checked="checked" />
+                    <label for="chkKhuyenMaiF">Không</label>
+
+                    <input type="radio" id="chkKhuyenMaiT" name="chkKhuyenMai" value="true" />
+                    <label for="chkKhuyenMaiT">Có</label>
+                }
+                
+
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" class="btn" name="btnAdd" value="Lưu lại" />
+                &nbsp;
+
+            </td>
+        </tr>
+    </table>
+</form>
+            </div>
+            <div class="bottom"><div></div></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#giaSc').html($('#txtGia').val().toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") + " VNĐ");
+    // format vietnamdong:
+    // txt Gia keypress:
+    $('#txtGia').keyup(function () {
+        var txtGia = $('#txtGia').val();
+        var price = txtGia.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")+" VNĐ";
+        $('#giaSc').html(price);
+    });
+
+    function deleteImage(id) {
+        $.ajax({
+            type: "POST",
+            url: "SanPham/DeleteFile",
+            data: { id: id },
+            success: function (data) {
+                $("#imagePost").html(data);
+            }
+        });
+    }
+
+</script>
+<script src="~/Scripts/ckeditor/ckeditor.js"></script>

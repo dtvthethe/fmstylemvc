@@ -1,0 +1,21 @@
+﻿@using FMStyle.Libraries;
+@using FMStyle.Areas.Admin.Models;
+@model List<object>
+@{
+	String key = Model[0].ToString();
+	int id = Convert.ToInt32(Model[1]);
+	List<nguoidung> list = (List<nguoidung>)Model[2];
+}
+@foreach(nguoidung us in list)
+{
+    <li>
+        <a href="/admin/nguoi-dung-thong-tin-@Lib.VietNamToEnglish(us.hoten)-@us.id_user&#46;html" title="@us.hoten">
+            @us.hoten
+        </a>
+    </li>
+}
+<li>
+        <a href="#" title="@key">
+            Xem thêm kết quả tìm kiếm "@key".
+        </a>
+    </li>

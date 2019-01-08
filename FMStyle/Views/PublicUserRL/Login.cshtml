@@ -1,0 +1,55 @@
+﻿@{
+    Layout = "~/Views/Shared/PublicTemplate.cshtml";
+}
+
+<h4><a href="/" style="color:#01c4c4">Trang chủ</a>/ Đăng nhập</h4>
+<div id="cont">
+    <div class="title">
+        <h3 class="title-names">ĐĂNG NHẬP</h3>
+    </div>
+    <div class="clr"></div>
+    <div class="product">
+        <fieldset class="fieDangNhap">
+            <legend class="legDangNhap">Đăng nhập</legend>
+            <form action="" method="post">
+                <table class="tbDangNhap">
+                    <tr>
+                        <td>Tên đăng nhập:</td>
+                        <td>
+                            <input type="text" name="txtUserName" maxlength="30" height="29" width="200" class="cinput" required />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Mật khẩu:</td>
+                        <td>
+                            <input type="password" name="txtPassword" maxlength="100" height="29" width="200" class="cinput" required />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            @Html.Raw(ViewBag.error)
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <input type="submit" name="btnLogin" value="Đăng nhập" class="cinputb" style="width: 101px;" />
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td></td>
+                        <td>
+                            <ul class="listLoginRedist">
+                                <li><a href="/quen-mat-khau.html" title="Quên mật khẩu">Quên mật khẩu</a></li>
+                                <li><a href="/dang-ky-tai-khoan.html" title="Đăng ký">Đăng ký</a></li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </fieldset>
+    </div>
+</div>

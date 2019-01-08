@@ -1,0 +1,58 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+
+<div class="space"></div>
+@Html.Raw(ViewBag.error)
+
+<div class="col w10 last">
+    <div class="content">
+        <div class="box header">
+            <div class="head"><div></div></div>
+            <h2>Thêm quảng cáo</h2>
+            <div class="desc">
+                <form action="" method="post" enctype="multipart/form-data">
+                    <table>
+                        <tr>
+                            <td>Tên:</td>
+                            <td>
+                                <input type="text" name="txtTen" class="text w_20" value="" required />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Link:</td>
+                            <td>
+                                <textarea name="txtLink" rows="5" cols="50"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Hình ảnh:</td>
+                            <td id="hinhAnh">
+                                <input type="file" name="file" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Trạng thái:</td>
+                            <td>
+                                <input type="radio" name="radTT" id="radY" value="true" />
+                                <label for="radY">Hoạt động</label>
+                                <input type="radio" name="radTT" id="radN" value="false" checked="checked" />
+                                <label for="radY">Tắt</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="submit" name="btnSave" value="Thêm mới" class="btn" />
+                            </td>
+                        </tr>
+                    </table>
+
+                </form>
+
+            </div>
+            <div class="bottom"><div></div></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+﻿@using FMStyle.Models;
+@model List<phuong_thuc_thanh_toan>
+@{
+    Layout = "~/Views/Shared/PublicTemplate.cshtml";
+}
+
+<h4><a href="/" style="color: #01c4c4">Trang chủ</a>/ Thanh toán</h4>
+<div class="title">
+    <h3 class="title-names">Thanh toán</h3>
+</div>
+<div class="clr" style="margin-top:50px"></div>
+@Html.Raw(ViewBag.error)
+    <strong style="color: #01c4c4">Lựa chọn phương thức thanh toán: </strong>
+<form action="" method="post">
+    <select name="cmbPT" id="cmbPT" onchange="lichsumua()" class="cinputb">
+        @foreach (var item in Model)
+        {
+            <option value="@item.id_pt">@item.ten_phuongthuc</option>
+        }
+    </select>
+    <input type="submit" name="btnThanhToan" value="Thanh toán" class="cinputb" style="width: 106px;" />
+</form>
+<div class="clr" style="margin-top:20px"></div>
+<fieldset style="margin: 20px auto; border-radius: 7px; border: 1px solid #01c4c4;" >
+    <legend style="color: #01c4c4; font-weight: bold; margin-left: 15px">Nội dung</legend>
+    <div id="lbThanhToan" style="color: #000; font-weight: normal;padding: 15px 10px;">
+        @Html.Raw(Model[0].chitiet)
+    </div>
+</fieldset>
+
+<div class="clr" style="margin-top:50px"></div>
+
+<script type="text/javascript">
+
+        $("#btn").click(function () {
+            $("#lbThanhToan").html("<img src='/Images/public/ajax-loader.gif' style='margin-right: 200px' />");
+        });
+
+        function lichsumua() {
+            var id = $("#cmbPT").val();
+            $.ajax({
+                type: "POST",
+                url: "PublicOrder/GetPT",
+                data: { id: id },
+                success: function (data) {
+                    $("#lbThanhToan").html(data);
+                }
+            })
+        }
+</script>

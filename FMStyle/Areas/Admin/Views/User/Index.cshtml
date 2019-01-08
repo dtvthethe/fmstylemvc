@@ -1,0 +1,161 @@
+﻿@using FMStyle.Areas.Admin.Models;
+@using FMStyle.Libraries;
+@using FMStyle.Config;
+@model List<object>
+@{
+    List<role> listRole = (List<role>)Model[1];
+    List<nguoidung> listUser = (List<nguoidung>)Model[0];
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+
+}
+
+<div class="space"></div>
+@Html.Raw(ViewBag.error)
+
+<div class="col w10 last">
+    <div class="content">
+        <div class="box header">
+            <div class="head"><div></div></div>
+            <h2>Người dùng</h2>
+            <div class="desc">
+                <form action="/User/Index" method="post">
+                    <div class="tool">
+                        <input type="submit" class="btnx" id="btnCapNhat" name="btnCapNhat" value="Xóa" onclick="return confirm('Thao tác này sẽ xóa các thông tin lịch sử giao dịch của người dùng. Bạn có muốn xóa không?')" />
+                        <input type="button" class="btn" id="btnThem" value="Thêm người dùng" onclick="btn_ThemClick()" />
+                        Xem theo:
+                        <select name="ddlRole" id="ddlRole" class="cmb">
+                            <option value="-1">Tất cả</option>
+                            @foreach (role r in listRole)
+            {
+                if (r.id_role == Convert.ToInt32(ViewBag.role))
+                {
+                                    <option value="@r.id_role" data-key="@Lib.VietNamToEnglish(r.role1)" selected="selected">@r.role1</option>
+                                }
+                                else
+                                {
+                                    <option value="@r.id_role" data-key="@Lib.VietNamToEnglish(r.role1)">@r.role1</option>
+                                }
+                            }
+                        </select>
+                        <div class="nav-timkiem">
+                            Tìm kiếm:
+                            <input type="text" name="txtTimKiem" id="txtTimKiem" class="text w_20" placeholder="Nhập tên..." value="@ViewBag.key" />
+                            <select name="ddlTimKiem" id="ddlTimKiem" class="cmb">
+                                <option value="-1">Tất cả</option>
+                                @foreach (role r in listRole)
+                                {
+                                    <option value="@r.id_role" data-key="@Lib.VietNamToEnglish(r.role1)">@r.role1</option>
+                                }
+                            </select>
+                            <input type="submit" id="btnTimKiem" name="btnTimKiem" value="Tìm kiếm" class="btn" />
+                            <ul class="listSeach-us"></ul>
+                        </div>
+                    </div>
+
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th class="checkbox">
+                                    <input type="checkbox" id="allCk" onclick="selectAll(this)" />
+                                </th>
+                                <th class="stt">STT</th>
+                                <th class="hinhanh">Username</th>
+                                <th class="tenhoa">Họ và tên</th>
+                                <th class="tenhoa">Số điện thoại</th>
+                                <th class="tenhoa">Địa chỉ</th>
+                                <th class="tenhoa">Email</th>
+                                <th class="tenhoa">Role</th>
+                            </tr>
+                            @for (int i = 0; i < listUser.Count; i++)
+            {
+                                <tr>
+                                    <td>
+                                        @if (listUser[i].id_user != Conf.ID_AD_TBUSER)
+                                        {
+                                            <input type="checkbox" name="@i&#46;del" class="ckb" value="@listUser[i].id_user" />
+                                        }
+                                    </td>
+                                    <td>@(i + 1)</td>
+                                    <td>
+                                        <a href="/admin/nguoi-dung-thong-tin-@Lib.VietNamToEnglish(listUser[i].hoten)-@listUser[i].id_user&#46;html" title="@listUser[i].hoten">@listUser[i].username</a>
+                                    </td>
+                                    <td>@listUser[i].hoten</td>
+                                    <td>@listUser[i].sdt</td>
+                                    <td>@listUser[i].diachi</td>
+                                    <td>@listUser[i].email</td>
+                                    <td>@listUser[i].role1.role1</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <div class="bottom"><div></div></div>
+        </div>
+    </div>
+</div>
+
+@Html.Raw(ViewBag.paging)
+<script type="text/javascript">
+
+    // check / uncheck all checkbox
+    function selectAll(invoker) {
+        var inputElements = document.getElementsByClassName('ckb');
+
+        for (var i = 0; i < inputElements.length; i++) {
+            var myElement = inputElements[i];
+            if (myElement.type === "checkbox") {
+                myElement.checked = invoker.checked;
+            }
+        }
+    }
+
+    // add:
+    function btn_ThemClick() {
+        window.location.href = "/admin/nguoi-dung-them.html";
+    }
+
+
+    function selectAll(invoker) {
+        var inputElements = document.getElementsByClassName('ckb');
+
+        for (var i = 0; i < inputElements.length; i++) {
+            var myElement = inputElements[i];
+            if (myElement.type === "checkbox") {
+                myElement.checked = invoker.checked;
+            }
+        }
+    }
+
+    // select cmbRole:
+    $("select#ddlRole").change(function () {
+        if ($(this).val() != -1) {
+            window.location.href = "/admin/nguoi-dung-role-" + $("#ddlRole :selected").attr("data-key") + "-" + $(this).val() + ".html";
+        }
+        else {
+            window.location.href = "/admin/nguoi-dung.html";
+        }
+
+    });
+
+    $('#txtTimKiem').keyup(function () {
+        var txtKey = $('#txtTimKiem').val();
+        if (txtKey == "") {
+            $(".listSeach-us").hide();
+        }
+        else {
+            $(".listSeach-us").show();
+            var id = $("#ddlTimKiem :selected").val();
+            $.ajax({
+                type: "POST",
+                url: "User/AjaxLoadSearch",
+                data: { idRole: id, key: txtKey },
+                success: function (data) {
+                    $(".listSeach-us").html(data);
+                }
+            });
+        }
+
+    });
+
+</script>

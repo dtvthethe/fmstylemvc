@@ -1,0 +1,178 @@
+﻿@using FMStyle.Areas.Admin.Models;
+@using FMStyle.Config;
+@using FMStyle.Libraries;
+@model List<object>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+    List<decimal> listPrice = (List<decimal>)Model[0];
+    List<dat_hang> listOrder = (List<dat_hang>)Model[1];
+}
+
+<div class="space"></div>
+@Html.Raw(ViewBag.error)
+
+<div class="col w10 last">
+    <div class="content">
+        <div class="box header">
+            <div class="head"><div></div></div>
+            <h2>Đặt hàng</h2>
+            <div class="desc">
+                <form action="" method="post">
+                    <div class="tool">
+                        <input type="submit" class="btnx" name="btnSave" value="Xóa" onclick="return confirm('Thao tác này sẽ xóa và cập nhật sản phẩm khuyến mãi. Bạn có muốn lưu lại không?')" />
+                        Xem theo:
+                        <select name="selectView" id="selectView" class="cmb" onchange="redirectStatus()">
+                            @if (Convert.ToInt32(ViewBag.status) == 1)
+            {
+                                <option value="-1">Tất cả</option>
+                                <option value="1" selected="selected">Đã giao hàng</option>
+                                <option value="0">Chưa giao hàng</option>
+                            }
+                            else if (Convert.ToInt32(ViewBag.status) == 0)
+                            {
+                                <option value="-1">Tất cả</option>
+                                <option value="1">Đã giao hàng</option>
+                                <option value="0" selected="selected">Chưa giao hàng</option>
+                            }
+                            else
+                            {
+                                <option value="-1">Tất cả</option>
+                                <option value="1">Đã giao hàng</option>
+                                <option value="0">Chưa giao hàng</option>
+                            }
+
+
+                        </select>
+                    </div>
+                    <div class="dathang">
+                        <div class="dathang-left">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <th class="checkbox">
+                                            <input type="checkbox" name="chkAllPar" onclick="selectAll(this)" />All
+                                        </th>
+                                        <th class="stt">STT</th>
+                                        <th class="">Họ và tên</th>
+                                        <th class=""></th>
+                                        <th class="">Ngày mua</th>
+                                        <th class="">Tổng tiền</th>
+                                        <th class="">Phương thức</th>
+                                        <th class="">Thanh toán</th>
+                                        <th class="sua">Xem nhanh</th>
+                                    </tr>
+                                    @for (int i = 0; i < listOrder.Count; i++)
+                                    {
+                                        <tr>
+                                            <td class="checkbox">
+                                                <input id="" type="checkbox" class="ckb" name="@i&#46;del" value="@listOrder[i].id_dathang">
+                                            </td>
+                                            <td class="stt">
+                                                @(i + 1)
+                                            </td>
+                                            <td>
+                                                <a href="/admin/nguoi-dung-thong-tin-@Lib.VietNamToEnglish(listOrder[i].nguoidung.hoten)-@listOrder[i].id_user&#46;html" class="ten">
+                                                    @listOrder[i].nguoidung.hoten
+                                                </a>
+                                            </td>
+                                            <td>
+                                                @if (listOrder[i].trang_thai == true)
+                                                {
+                                                    <img class="lbHinh" alt="Đã thu tiền" src="~/Images/admin/dathutien.jpg" />
+                                                }
+                                            </td>
+                                            <td>@listOrder[i].ngaydathang</td>
+                                            <td>
+                                                <span class="lbTongTien">@Lib.convertToVietNamDong(listPrice[i])</span>
+                                            </td>
+                                            <td>
+                                                <a href="/admin/thong-tin-phuong-thuc-@Lib.VietNamToEnglish(listOrder[i].phuong_thuc_thanh_toan.ten_phuongthuc)-@listOrder[i].id_pt&#46;html" title="@listOrder[i].phuong_thuc_thanh_toan.ten_phuongthuc">@listOrder[i].phuong_thuc_thanh_toan.ten_phuongthuc</a>
+                                            </td>
+                                            <td>
+                                                <a href="/admin/thanh-toan-san-pham-@listOrder[i].id_dathang&#46;html" title="Thanh toán">Thanh toán</a>
+                                            </td>
+                                            <td class="sua">
+                                                <a href="javascript:void(0)" onclick="ttChiTiet(@listOrder[i].id_dathang);" id="ajaxLoadTT" class="ten">Xem nhanh-&gt;</a>
+
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                            @*PHAN TRANG O DAY*@
+                        </div>
+
+                        <div class="dathang-right">
+                            <div class="col last" style="width:99%">
+                                <div class="content">
+                                    <div class="box header">
+                                        <div class="head">
+                                            <div></div>
+                                        </div>
+                                        <h2>Tên hàng hóa, dịch vụ</h2>
+                                        <div class="descdesc">
+
+                                            <div style="width: 222px;">
+                                                <img alt="Click" src="~/Images/admin/xemnhanh.png">
+                                                <p>Click chọn vào <strong>xem nhanh-&gt;</strong> để xem Tên hàng hóa, dịch vụ</p>
+                                            </div>
+                                            <table></table>
+
+
+                                        </div>
+                                        <div class="bottom">
+                                            <div></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @Html.Raw(ViewBag.Paging)
+                </form>
+            </div>
+            <div class="bottom"><div></div></div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    // during ajax load product
+    $("#ajaxLoadTT").click(function () {
+        var img = '<img src="/Images/admin/ajax-loader.gif" alt="Lodding..." />';
+        $(".descdesc").html(img);
+    });
+
+    // ajax Load product
+    function ttChiTiet(id) {
+
+        $.ajax({
+            type: "POST",
+            url: "DatHang/AjaxLoadProduct",
+            data: { id: id },
+            success: function (data) {
+                $(".descdesc").html(data);
+            }
+        })
+    }
+    // check all / uncheck all checkbox
+    function selectAll(invoker) {
+        var inputElements = document.getElementsByClassName('ckb');
+
+        for (var i = 0; i < inputElements.length; i++) {
+            var myElement = inputElements[i];
+            if (myElement.type === "checkbox") {
+                myElement.checked = invoker.checked;
+            }
+        }
+    }
+
+    function redirectStatus() {
+        var st = $("#selectView").val();
+        window.location.href = "/admin/dat-hang-status-" + st + ".html";
+
+    }
+
+</script>
+

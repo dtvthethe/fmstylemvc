@@ -1,0 +1,76 @@
+﻿@using FMStyle.Areas.Admin.Models;
+@using FMStyle.Libraries;
+@model List<MLienHe>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+
+<div class="space"></div>
+@Html.Raw(ViewBag.error)
+
+<div class="col w10 last">
+    <div class="content">
+        <div class="box header">
+            <div class="head"><div></div></div>
+            <h2>Phương thức thanh toán</h2>
+            <div class="desc">
+                <form action="" method="post">
+                    <div class="tool">
+                        <input type="submit" class="btnx" name="btnDel" onclick="return confirm('Bạn có muốn xóa các liên hệ đã chọn không?');" value="Xóa" />
+                    </div>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th class="checkbox">
+                                    <input type="checkbox" name="allChk" onclick="selectAll(this, 'ckb');" />All
+                                </th>
+                                <th class="stt">STT</th>
+                                <th class="hinhanh">Họ và tên</th>
+                                <th class="tenhoa">Email</th>
+                                <th class="tenhoa">Số điện thoại</th>
+                                <th class="tenhoa">Ngày gửi</th>
+                            </tr>
+                            @for (int i = 0; i < Model.Count; i++)
+            {
+                                <tr>
+                                    <td class="checkbox">
+                                        <input id="" type="checkbox" class="ckb" name="@i&#46;del" value="@Model[i].id_lienhe">
+                                    </td>
+                                   <td>@(i+1)</td>
+                                    <td>
+                                        <a href="/admin/lien-he-view-@Model[i].id_lienhe&#46;html" title="@Model[i].hoten">@Model[i].hoten</a>
+                                       @if (Model[i].id_user != null)
+                                        {
+                                            <i>[Đã xem]</i>
+                                        }
+                                    </td>
+                                    <td>@Model[i].email</td>
+                                    <td>@Model[i].sdt</td>
+                                    <td>@Model[i].ngaygui</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <div class="bottom"><div></div></div>
+        </div>
+    </div>
+</div>
+@Html.Raw(ViewBag.paging)
+<script type="text/javascript">
+    function selectAll(invoker, className) {
+        var inputElements = document.getElementsByClassName(className);
+        for (var i = 0; i < inputElements.length; i++) {
+            var myElement = inputElements[i];
+            if (myElement.type === "checkbox") {
+                myElement.checked = invoker.checked;
+            }
+        }
+    }
+
+    function btn_ThemClick() {
+        window.location.href = "/admin/them-phuong-thuc-thanh-toan.html";
+    }
+</script>

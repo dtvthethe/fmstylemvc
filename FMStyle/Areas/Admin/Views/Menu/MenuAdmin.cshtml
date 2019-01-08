@@ -1,0 +1,62 @@
+﻿@using FMStyle.Libraries;
+<ul>
+
+    <li>
+        <a href="/admin/san-pham.html" class="@MenuCurrent.sanPham"><span>Sản phẩm</span></a>
+    </li>
+    <li>
+        <a href="/admin/danh-muc.html" class="@MenuCurrent.danhMuc"><span>Danh mục</span></a>
+    </li>
+
+    <li>
+        <a href="/admin/dat-hang.html" class="@MenuCurrent.datHang" >
+            <span>
+                Đặt hàng
+                <strong style="color: red">
+                    <span id="lbDatHang" style="margin: 0; float: right; background-color: red; color: #fff; padding: 0px 2px; border-radius: 5px; margin-left: 5px; font-size: 11px">@Html.Action("countOrderStatusFalse", "DatHang")</span>
+                </strong>
+            </span>
+        </a>
+    </li>
+    <li>
+        <a href="/admin/quang-cao.html"  class="@MenuCurrent.quangCao"><span>Quảng cáo</span></a>
+    </li>
+    <li>
+        <a href="/admin/slide.html"  class="@MenuCurrent.slide"><span>Slide</span></a>
+    </li>
+    <li>
+        <a href="/admin/lien-he.html"  class="@MenuCurrent.lienHe">
+            <span>
+                Liên hệ
+                <strong style="color: red">
+                    <span id="lbDatHang" style="margin: 0; float: right; background-color: red; color: #fff; padding: 0px 2px; border-radius: 5px; margin-left: 5px; font-size: 11px">@Html.Action("countLienHe", "LienHe")</span>
+                </strong>
+            </span>
+        </a>
+    </li>
+    <li>
+        <a href="/admin/nguoi-dung.html" class="@MenuCurrent.nguoiDung"><span>Người dùng</span></a>
+    </li>
+    <li>
+        <a href="/admin/phuong-thuc-thanh-toan.html" class="@MenuCurrent.phuongThuc">
+            <span>
+                Phương thức thanh toán <strong style="color: red">
+                    <span id="lbDatHang" class="lbDatHang-spa"></span>
+                </strong>
+            </span>
+        </a>
+    </li>
+    <li>
+        <a href="/admin/quyen-nguoi-dung.html" class="@MenuCurrent.quyenNguoiDung"><span>Quyền người dùng</span></a>
+    </li>
+    <li>
+        <a href="/admin/thong-ke.html" class="@MenuCurrent.thongKe"><span>Thống kê</span></a>
+    </li>
+    <li>
+        <a href="/admin/khuyen-mai.html" class="@MenuCurrent.khuyenMai"><span>Khuyến mãi</span></a>
+    </li>
+    <li>
+        <a href="/admin/fmstyle-phan-mem.html" class="@MenuCurrent.thongTin"><span>Thông tin</span></a>
+    </li>
+
+</ul>

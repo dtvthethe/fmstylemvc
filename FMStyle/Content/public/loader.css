@@ -1,0 +1,87 @@
+﻿/*=======================================================
+	Page Loader
+========================================================*/
+#loader {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background: rgba(255,255,255,1);
+	z-index: 999999;
+	opacity: 1;
+	text-align: center;
+}
+.loaderContainer {
+	position: relative;
+}
+@-webkit-keyframes loader {
+	0% {
+		-webkit-transform: translateX(0px);
+		-moz-transform: translateX(0px);
+		-ms-transform: translateX(0px);
+		-o-transform: translateX(0px);
+		transform: translateX(0px);
+	}
+	50% {
+		-webkit-transform: translateX(120px);
+		-moz-transform: translateX(120px);
+		-ms-transform: translateX(120px);
+		-o-transform: translateX(120px);
+		transform: translateX(120px);
+	}
+}
+@keyframes loader {
+	0% {
+		-webkit-transform: translateX(0px);
+		-moz-transform: translateX(0px);
+		-ms-transform: translateX(0px);
+		-o-transform: translateX(0px);
+		transform: translateX(0px);
+	}
+	50% {
+		-webkit-transform: translateX(120px);
+		-moz-transform: translateX(120px);
+		-ms-transform: translateX(120px);
+		-o-transform: translateX(120px);
+		transform: translateX(120px);
+	}
+}
+#loader .position-center-center {
+	width: 100%;
+}
+#loader p {
+	margin: 20px 0;
+}
+.loaderContainer .loaderBG {
+	background: rgba(0,0,0,0.3);
+	width: 10%;
+	height: 4px;
+	margin: 0 auto;
+}
+.loaderContainer .loaderCircle {
+	background: #fff;
+	width: 120px;
+	height: 6px;
+	border-radius: 0;
+	position: absolute;
+	top: -1px;
+	left: 43%;
+	/* calling our animation keyframe */
+	-webkit-animation: loader 1000ms infinite ease-in-out;
+	-moz-animation: loader 1000ms infinite ease-in-out;
+	-ms-animation: loader 1000ms infinite ease-in-out;
+	-o-animation: loader 1000ms infinite ease-in-out;
+	animation: loader 1000ms infinite ease-in-out;
+}
+.position-center-center {
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+.float-left{float:left;position:relative}
+.float-right{float:right;position:relative}

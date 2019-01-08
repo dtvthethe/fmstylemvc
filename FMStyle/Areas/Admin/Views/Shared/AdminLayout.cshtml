@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width; charset=utf-8" />
+    <title>@ViewBag.Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="~/Images/public/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    @*<script src="~/Scripts/admin/jquery-1.11.1.min.js"></script>*@
+    <script src="~/Scripts/jquery-2.2.3.min.js"></script>
+    <link href="~/Content/admin/style.css" rel="stylesheet" />
+    <link href="~/Content/admin/style.css" rel="stylesheet" />
+</head>
+<body>
+    @*taskbar top*@
+    <div id="header">
+        <div class="col w5 bottomlast">
+            <a href="/admin" class="logo">
+                <img class="img_logo" src="../images/admin/footer_logo.gif" alt="Logo" />
+            </a>
+        </div>
+        <div class="col w5 last right bottomlast">
+            <p class="last">
+                @Html.Action("GetName", "Login")
+            </p>
+
+        </div>
+        <div class="clear"></div>
+    </div>
+    @*end taskbar top*@
+    <div id="wrapper">
+        <div id="minwidth">
+            <div id="holder">
+                @*menu*@
+                <div id="menu">
+                    <div id="left"></div>
+                    <div id="right"></div>
+                        @if (System.Web.HttpContext.Current.Session["user"] != null)
+                        {
+                            @Html.Action("Index", "Menu");
+                        }
+                    <div class="clear"></div>
+                </div>
+                @*end menu*@
+                <div id="desc">
+                    <div class="help" id="table">
+                        @RenderBody()
+                        <div class="clear"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <p class="last">Copyright 2014 - FMStyle - 146D, Nguyễn Thị Thập, Liên Chiểu, Đà Nẵng</p>
+    </div>
+
+</body>
+</html>

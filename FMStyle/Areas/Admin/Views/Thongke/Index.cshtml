@@ -1,0 +1,146 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+<div class="space"></div>
+@Html.Raw(ViewBag.error)
+
+<div class="col w10 last">
+    <div class="content">
+        <div class="box header">
+            <div class="head"><div></div></div>
+            <h2>Thống kê</h2>
+            <div class="desc">
+                <div class="dathang">
+                    <div class="dathang-left" style="width: 30%">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <th>Thống kê theo</th>
+                                    <th>Chi tiết</th>
+                                </tr>
+                                
+                                <tr>
+                                    <td>Thống kê đơn hàng(tất cả)</td>
+                                    <td>
+                                        <a href="javascript:void(0)" onclick="donHang();" class="ten">Xem-&gt;</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Thống kê doanh thu(đã thanh toán)</td>
+                                    <td>
+                                        <a href="javascript:void(0)" onclick="doanhthu();" class="ten">Xem-&gt;</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Danh sách đặt hàng (Chưa thanh toán)</td>
+                                    <td>
+                                        <a href="javascript:void(0)" onclick="datHang();" class="ten">Xem-&gt;</a>
+                                    </td>
+                                </tr>
+                                @*<tr>
+                                    <td>Sản phẩm tồn kho</td>
+                                    <td>
+                                        <a href="javascript:void(0)" onclick="tonKho();" class="ten">Xem-&gt;</a>
+                                    </td>
+                                </tr>*@
+                                <tr>
+                                    <td>Sản phẩm được mua nhiều</td>
+                                    <td>
+                                        <a href="javascript:void(0)" onclick="muaNhieu();" class="ten">Xem-&gt;</a>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>Danh sách sản phẩm khuyến mãi</td>
+                                    <td>
+                                        <a href="javascript:void(0)" onclick="khuyenMai();" class="ten">Xem-&gt;</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="dathang-right" style="width: 65%">
+                        <div class="descdesc">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom"><div></div></div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(".ten").click(function () {
+        $(".descdesc").html("<img src='../images/admin/ajax-loader.gif' />");
+    });
+
+    function doanhthu() {
+
+        $.ajax({
+            type: "POST",
+            url: "ThongKe/DoanhThu",
+            data: {},
+            success: function (data) {
+                $(".descdesc").html(data);
+            }
+        })
+    }
+    function donHang() {
+
+        $.ajax({
+            type: "POST",
+            url: "ThongKe/DonHang",
+            data: {},
+            success: function (data) {
+                $(".descdesc").html(data);
+            }
+        })
+    }
+    function tonKho() {
+
+        $.ajax({
+            type: "POST",
+            url: "ThongKe/TonKho",
+            data: {},
+            success: function (data) {
+                $(".descdesc").html(data);
+            }
+        })
+    }
+    function muaNhieu() {
+
+        $.ajax({
+            type: "POST",
+            url: "ThongKe/MuaNhieu",
+            data: {},
+            success: function (data) {
+                $(".descdesc").html(data);
+            }
+        })
+    }
+    function datHang() {
+
+        $.ajax({
+            type: "POST",
+            url: "ThongKe/DatHang",
+            data: {},
+            success: function (data) {
+                $(".descdesc").html(data);
+            }
+        })
+    }
+    function khuyenMai() {
+
+        $.ajax({
+            type: "POST",
+            url: "ThongKe/KhuyenMai",
+            data: {},
+            success: function (data) {
+                $(".descdesc").html(data);
+            }
+        })
+    }
+</script>

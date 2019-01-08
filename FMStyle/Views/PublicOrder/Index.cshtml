@@ -1,0 +1,66 @@
+﻿@using FMStyle.Libraries;
+@using FMStyle.Models;
+@model List<dat_hang>
+@{
+    Layout = "~/Views/Shared/PublicTemplate.cshtml";
+}
+
+<h4><a style="color: #01c4c4" href="/">Trang chủ</a>/ Lịch sử mua hàng</h4>
+<div class="title">
+    <h3 class="title-names">Lịch sử mua hàng</h3>
+</div>
+<div class="clr" style="margin-bottom:10px"></div>
+<div style="float: left">
+    <table class="tbLichSu" style="width:750px">
+        <tr>
+            <th>STT</th>
+            <th>Thời gian</th>
+            <th>Phương thức thanh toán</th>
+            <th>Trạng thái</th>
+            <th>Chi tiết</th>
+        </tr>
+        @for (int i = 0; i < Model.Count(); i++) {
+            <tr>
+                    <td>@(i+1)</td>
+                    <td>@Model[i].ngaydathang</td>
+                    <td>
+                        @Model[i].phuong_thuc_thanh_toan.ten_phuongthuc
+
+                    </td>
+                    <td>
+                        @if (Model[i].trang_thai == true)
+                        {
+                            <span>Đã giao hàng</span>
+                        }
+                        else
+                        {
+                            <span style="color:red">Đang chờ giao hàng</span>
+                        }
+
+                    </td>
+                    <td><a href="javascript:void(0);" id="btn" title="Chi tiết" onclick="lichsumua(@Model[i].id_dathang);">Chi tiết &rarr;</a></td>
+                </tr>
+        }
+    </table>
+</div>
+<div style="float: right; overflow:auto;height: 400px;" id="noidung">
+
+</div>
+<script type="text/javascript">
+
+        $("#btn").click(function () {
+            $("#noidung").html("<img src='/Images/public/ajax-loader.gif' style='margin-right: 200px' />");
+        });
+
+        function lichsumua(id) {
+
+            $.ajax({
+                type: "POST",
+                url: "PublicOrder/OrderDetailt",
+                data: { idOrder: id },
+                success: function (data) {
+                    $("#noidung").html(data);
+                }
+            })
+        }
+</script>

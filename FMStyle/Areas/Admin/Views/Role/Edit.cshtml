@@ -1,0 +1,81 @@
+﻿@using FMStyle.Areas.Admin.Models;
+@model role
+@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+<div class="space"></div>
+@Html.Raw(ViewBag.error)
+
+<div class="col w10 last">
+    <div class="content">
+        <div class="box header">
+            <div class="head"><div></div></div>
+            <h2>Thêm quyền người dùng</h2>
+            <div class="desc">
+                <form action="" method="post">
+                    <table>
+                        <tr>
+                            <td style="width: 153px">Role:</td>
+                            <td>
+                                <input type="text" id="txtTen" name="txtTen" class="text w_20" maxlength="30" width="200" required value="@Model.role1" />
+                                <input type="hidden" name="idHd" value="@Model.id_role" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 153px">Truy cập vào CMS:</td>
+                            <td>
+                                @if (Model.truycap_cms == false)
+                                {
+                                    <input type="radio" id="chkTruyCap" name="chkTruyCap" value="false" checked="checked">
+                                    <label for="chkKhuyenMaiF">Không</label>
+
+                                    <input type="radio" id="chkTruyCap" name="chkTruyCap" value="true">
+                                    <label for="chkKhuyenMaiT">Có</label>
+                                }
+                                else
+                                {
+                                    <input type="radio" id="chkTruyCap" name="chkTruyCap" value="false">
+                                    <label for="chkKhuyenMaiF">Không</label>
+
+                                    <input type="radio" id="chkTruyCap" name="chkTruyCap" value="true" checked="checked">
+                                    <label for="chkKhuyenMaiT">Có</label>
+                                }
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 153px">Special:</td>
+                            <td>
+                                @if (Model.special == false)
+                                {
+                                    <input type="radio" id="cmbSp" name="cmbSp" value="false" checked="checked">
+                                    <label for="chkKhuyenMaiF">Không</label>
+
+                                    <input type="radio" id="cmbSp" name="cmbSp" value="true">
+                                    <label for="chkKhuyenMaiT">Có</label>
+                                }
+                                else
+                                {
+                                    <input type="radio" id="cmbSp" name="cmbSp" value="false">
+                                    <label for="chkKhuyenMaiF">Không</label>
+
+                                    <input type="radio" id="cmbSp" name="cmbSp" value="true" checked="checked">
+                                    <label for="chkKhuyenMaiT">Có</label>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 153px"></td>
+                            <td>
+                                <input type="submit" name="btnSave" class="btn" value="Lưu lại" />
+                                &nbsp;
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="bottom"><div></div></div>
+        </div>
+    </div>
+</div>

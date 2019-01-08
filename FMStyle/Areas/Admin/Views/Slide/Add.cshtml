@@ -1,0 +1,47 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+<div class="space"></div>
+@Html.Raw(ViewBag.error)
+
+<div class="col w10 last">
+    <div class="content">
+        <div class="box header">
+            <div class="head"><div></div></div>
+            <h2>Thêm slide</h2>
+            <div class="desc">
+                <form action="" method="post" enctype="multipart/form-data">
+                    <table>
+                        <tr>
+                            <td>Hình ảnh:</td>
+                            <td>
+                                <input type="file" id="file" name="file" required />
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>Link:</td>
+                            <td>
+                                <input type="text" id="txtLink" class="text w_20" name="txtLink" maxlength="200" style="width:200px" required />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Vị trí:</td>
+                            <td>
+                                <input type="number" id="txtViTri" class="text w_20" name="txtViTri" min="0" max="100" maxlength="3" style="width:200px" required />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="submit" name="btnAdd" class="btn" value="Thêm slide" />
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="bottom"><div></div></div>
+        </div>
+    </div>
+</div>

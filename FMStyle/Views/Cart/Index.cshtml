@@ -1,0 +1,109 @@
+﻿@using FMStyle.Models;
+@using FMStyle.Libraries;
+@model List<object>
+@{
+    Layout = "~/Views/Shared/PublicTemplate.cshtml";
+    List<MCart> lstCart = (List<MCart>)Model[0];
+    List<san_pham> lstSanPham = (List<san_pham>)Model[1];
+}
+
+<h4><a style="color:#01c4c4" href="/">Trang chủ</a>/ Giỏ hàng</h4>
+<div id="cont">
+    <div class="title">
+        <h3 class="title-names">Sản phẩm trong giỏ hàng</h3>
+    </div>
+    <div class="clr"></div>
+    <div class="product">
+        <form action="" method="post">
+        <table class="tbGioHang">
+            <tr class="thGioHang">
+                <th class="all">
+                    <input type="checkbox" id="allCk" />
+                </th>
+                <th class="hinhGioHang">Hình ảnh</th>
+                <th>Tên sản phẩm</th>
+                <th>Size</th>
+                <th>Số lượng</th>
+                <th>Gía</th>
+            </tr>
+            @if (Model != null)
+            {
+                decimal tongTien = 0;
+                for (int i = 0; i < lstSanPham.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="allCk" class="cbCheckDel" name="@i&#46;del" />
+                        </td>
+                        <td>
+                            <a href="/thong-tin-san-pham-@Lib.VietNamToEnglish(lstSanPham[i].ten_sanpham)-@lstSanPham[i].id_sanpham&#46;html" title='@lstSanPham[i].ten_sanpham'>
+                                <img src="/uploads/@lstSanPham[i].hinhanh" height="100" alt="@lstSanPham[i].ten_sanpham"></img>
+                            </a>
+                        </td>
+                        <td><a href="/thong-tin-san-pham-@Lib.VietNamToEnglish(lstSanPham[i].ten_sanpham)-@lstSanPham[i].id_sanpham&#46;html" title='@lstSanPham[i].ten_sanpham'>@lstSanPham[i].ten_sanpham</a></td>
+                        <td>@lstCart[i].size</td>
+                        <td>
+                            <input type="number" name="@i&#46;txtSoLuong" value="@lstCart[i].soLuong" min="1" max="100" maxlength="3" class="cinputb" style="width:80px" required />
+                        </td>
+                        <td>
+                            @if (lstSanPham[i].khuyenmai == true)
+                            {
+                                int percent = 100 - Convert.ToInt32(ViewBag.khuyenMai);
+                                decimal gia = ((lstSanPham[i].gia * lstCart[i].soLuong) * percent) / 100;
+                                tongTien += gia;
+                                @Lib.convertToVietNamDong(gia);
+                            }
+                            else
+                            {
+                                tongTien += lstSanPham[i].gia * lstCart[i].soLuong;
+                                @Lib.convertToVietNamDong((lstSanPham[i].gia * lstCart[i].soLuong));
+                            }
+                        </td>
+                    </tr>
+                }
+
+                <tr class="tongTien">
+                    <td colspan="6">
+                        <span>Tổng tiền: @Lib.convertToVietNamDong(tongTien)</span>
+                    </td>
+                </tr>
+            }
+            else
+            {
+                <tr class="tongTien">
+                    <td colspan="6">
+                        <span>Giỏ hàng trống !</span>
+                    </td>
+                </tr>
+            }
+            
+            <tr class="thanhToan">
+
+                <td colspan="6">
+                    <input type="submit" name="btnCapNhat" value="Cập nhật" class="cinputb" style="width:101px" />
+                    <input type="button" name="btnThanhToan" value="Thanh toán" onclick="thanhToan()" class="cinputb" style="width:101px" />
+                </td>
+
+            </tr>
+        </table>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+
+    //chon tat ca:
+    $('#allCk').click(function (event) {
+        // loop through each checkbox
+        $('.cbCheckDel').each(function () {
+            // uncheck all checkboxes with class "checkRows"
+            if (this.checked) { this.checked = false; }
+                // check all with class "checkRows"
+            else { this.checked = true; }
+        });
+    });
+
+    // redirect pay:
+    function thanhToan() {
+        window.location.href = "/thanh-toan.html";
+    }
+</script>

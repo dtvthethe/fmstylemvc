@@ -1,0 +1,184 @@
+﻿@using FMStyle.Areas.Admin.Models;
+@using FMStyle.Config;
+@using FMStyle.Libraries;
+@model List<object>
+@{
+    dat_hang dh = (dat_hang)Model[0];
+    int indexCapChar = int.Parse(Model[1].ToString());
+    List<san_pham> lstSp = (List<san_pham>)Model[2];
+    decimal tongTien = (decimal)Model[3];
+    List<object> listCS = (List<object>)Model[4];
+    List<int> soLuongs = (List<int>)listCS[0];
+    List<string> sizes = (List<string>)listCS[1];
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+<div class="space"></div>
+@Html.Raw(ViewBag.error)
+
+<div class="col w10 last">
+    <div class="content">
+        <div class="box header">
+            <div class="head"><div></div></div>
+            <h2>Thanh toán đơn hàng</h2>
+            <div class="desc">
+                <form action="" method="post">
+                    <table>
+                        <tr>
+                            <td style="width: 145px">
+                                Trạng thái giao hàng:
+                            </td>
+                            <td>
+                                @if (dh.trang_thai == true)
+            {
+                                    <input type="radio" id="rbStatus1" name="rbStatus" value="true" checked="checked" /> <label for="rbStatus1">Đã thanh toán</label>
+                                    <input type="radio" id="rbStatus0" name="rbStatus" value="false" /> <label for="rbStatus0">Chưa thanh toán</label>
+                                }
+                                else
+                                {
+                                    <input type="radio" id="rbStatus1" name="rbStatus" value="true" /> <label for="rbStatus1">Đã thanh toán</label>
+                                    <input type="radio" id="rbStatus0" name="rbStatus" value="false" checked="checked" /> <label for="rbStatus0">Chưa thanh toán</label>
+                                }
+                                <input type="hidden" name="idHd" id="idHd" value="@dh.id_dathang" />
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 145px">
+                                Tổng tiền thanh toán:
+                            </td>
+                            <td>
+                               <strong style="color: red;">@Lib.convertToVietNamDong(tongTien)</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 145px"></td>
+                            <td>
+                                <div id="capcha">
+                                    <img alt="CAPCHA" id="img-capchar" src="/Images/acc/@Conf.IMG_CAPCHAR[indexCapChar]" />
+                                    <input type="hidden" name="indexCapChar" id="indexCapChar" value="@indexCapChar" />
+                                </div>
+                                <input type="button" name="btnLoadCapChar" class="btn" style="color: #000" value="Hình khác" onclick="loadOtherImage()" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 145px">
+                                Mã xác thực:
+                            </td>
+                            <td>
+                                <input type="text" maxlength="10" name="txtXacNhan" width="200" class="text w_20" required />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 145px"></td>
+                            <td>
+                                <input type="submit" name="btnThanhToan" class="btn" value="Thanh toán" onclick="return confirm('Bạn có muốn thanh toán cho đơn hàng này không?');" />
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="bottom"><div></div></div>
+        </div>
+    </div>
+</div>
+
+<div class="col w10 last">
+    <div class="content">
+        <div class="box header">
+            <div class="head"><div></div></div>
+            <h2>Danh sách sản phẩm đặt hàng</h2>
+            <div class="desc">
+                <form action="" method="post">
+                    <div class="tool">
+                        <input type="submit" class="btnx" name="btnDel" onclick="return confirm('Bạn có muốn lưu lại không?');" value="Xóa" />
+                        <input type="hidden" name="hdCount" value="@lstSp.Count()" />
+                        <input type="hidden" name="hdIdDOrder" value="@dh.id_dathang" />
+                    </div>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th class="khuyenmai">
+                                    Xóa:<input type="checkbox" value="all" id="allCk" onclick="selectAll(this)" />
+
+                                </th>
+                                <th class="stt">STT</th>
+                                <th class="hinhanh">Hình ảnh</th>
+                                <th class="tenhoa">Tên sản phẩm</th>
+                                <th class="tenhoa">Số lượng</th>
+                                <th class="tenhoa">Size</th>
+                                <th class="gia">Gía</th>
+                                <th class="khuyenmai">Khuyến mãi</th>
+                            </tr>
+                            @for (int i = 0; i < lstSp.Count; i++)
+                            {
+                                <tr>
+                                    <td class="checkbox">
+                                        <span class="cbCheckDel">
+                                            <input id="" type="checkbox" class="ckb" name="@i&#46;del" value="@lstSp[i].id_sanpham">
+                                        </span>
+                                        <input type="hidden" name="@i" value="@lstSp[i].id_sanpham" />
+                                    </td>
+                                    <td>
+                                        <span id="">@(i + 1)</span>
+                                    </td>
+                                    <td>
+                                        <a href="/admin/thong-tin-san-pham-@Lib.VietNamToEnglish(lstSp[i].ten_sanpham)-@lstSp[i].id_sanpham&#46;html">
+                                            @if (lstSp[i].hinhanh.ToString() != "")
+                                            {
+                                                <img style="" width="70px" height="70px" alt="" src="~/uploads/@lstSp[i].hinhanh">
+                                            }
+                                            else
+                                            {
+                                                <img style="" width="70px" height="70px" alt="" src="~/Images/admin/noimage.jpg">
+                                            }
+                                        </a>
+                                    </td>
+                                    <td><a href="/admin/thong-tin-san-pham-@Lib.VietNamToEnglish(lstSp[i].ten_sanpham)-@lstSp[i].id_sanpham&#46;html">@lstSp[i].ten_sanpham</a></td>
+                                    <td>@soLuongs[i]</td>
+                                    <td>@sizes[i]</td>
+                                    <td>@Lib.convertToVietNamDong(lstSp[i].gia)</td>
+                                    <td>
+
+                                        @if (lstSp[i].khuyenmai == true)
+                                        {
+                                            <span>Khuyến mãi</span>
+                                        }
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <div class="bottom"><div></div></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ajax Load product
+    function loadOtherImage() {
+        var index = $('#idHd').val();
+        $.ajax({
+            type: "POST",
+            url: "DatHang/AjaxLoadOtherImage",
+            data: { current: index },
+            success: function (data) {
+                $("#capcha").html(data);
+            }
+        })
+    }
+
+    // check all / uncheck all checkbox
+    function selectAll(invoker) {
+        var inputElements = document.getElementsByClassName('ckb');
+
+        for (var i = 0; i < inputElements.length; i++) {
+            var myElement = inputElements[i];
+            if (myElement.type === "checkbox") {
+                myElement.checked = invoker.checked;
+            }
+        }
+    }
+</script>

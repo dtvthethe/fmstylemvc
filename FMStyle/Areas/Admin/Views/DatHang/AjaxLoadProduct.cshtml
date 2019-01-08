@@ -1,0 +1,21 @@
+﻿@using FMStyle.Areas.Admin.Models;
+@using FMStyle.Libraries;
+@model List<dat_hang_detail>
+
+<table>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img height="100" width="80" src="/uploads/@item.san_pham.hinhanh" alt="@item.san_pham.ten_sanpham">
+                </td>
+                <td>
+                    <a href="/admin/thong-tin-san-pham-@Lib.VietNamToEnglish(item.san_pham.ten_sanpham)-@item.id_sanpham&#46;html">@item.san_pham.ten_sanpham</a>
+                </td>
+                <td>@item.soluong</td>
+                <td>@item.size</td>
+            </tr>
+        }
+    </tbody>
+</table>

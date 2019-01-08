@@ -1,0 +1,90 @@
+﻿@using FMStyle.Areas.Admin.Models;
+@model quangcao
+@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+<div class="space"></div>
+@Html.Raw(ViewBag.error)
+
+<div class="col w10 last">
+    <div class="content">
+        <div class="box header">
+            <div class="head"><div></div></div>
+            <h2>Thông tin quảng cáo</h2>
+            <div class="desc">
+                <form action="" method="post" enctype="multipart/form-data">
+                    <table>
+                        <tr>
+                            <td>Tên:</td>
+                            <td>
+                                <input type="text" name="txtTen" class="text w_20" value="@Model.ten" required />
+                                <input type="hidden" name="hdId" value="@Model.id_adv" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Link:</td>
+                            <td>
+                                <textarea name="txtLink" rows="5" cols="50">@Model.link</textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Hình ảnh:</td>
+                            <td id="hinhAnh">
+                                @if (Model.hinhanh != null)
+                                {
+                                    <img width="100px" src="~/adv/@Model.hinhanh" alt="@Model.ten" />
+                                    <input type="button" id="btnHinhAnh" value="Xóa hình này!" class="btnx" onclick="deleteFile(@Model.id_adv,'@Model.hinhanh')" />
+                                }
+                                else {
+                                    <input type="file" name="file" />
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Trạng thái:</td>
+                            <td>
+                                @if (Model.trangthai == true)
+                                {
+                                    <input type="radio" name="radTT" id="radY" value="true" checked="checked" />
+                                    <label for="radY">Hoạt động</label>
+                                    <input type="radio" name="radTT" id="radN" value="false" />
+                                    <label for="radY">Tắt</label>
+                                }
+                                else
+                                {
+                                    <input type="radio" name="radTT" id="radY" value="true" />
+                                    <label for="radY">Hoạt động</label>
+                                    <input type="radio" name="radTT" id="radN" value="false" checked="checked" />
+                                    <label for="radY">Tắt</label>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="submit" name="btnSave" value="Lưu lại" class="btn" />
+                            </td>
+                        </tr>
+                    </table>
+
+                </form>
+
+            </div>
+            <div class="bottom"><div></div></div>
+        </div>
+    </div>
+</div>
+<script>
+// ajax Load product
+function deleteFile(id, name) {
+    $.ajax({
+        type: "POST",
+        url: "QuangCao/DeleteFile",
+        data: {id : id ,name: name },
+        success: function (data) {
+            $("#hinhAnh").html(data);
+        }
+    })
+}
+</script>

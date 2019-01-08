@@ -1,0 +1,98 @@
+﻿@using FMStyle.Areas.Admin.Models;
+@using FMStyle.Libraries;
+@model List<quangcao>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+
+<div class="space"></div>
+@Html.Raw(ViewBag.error)
+
+<div class="col w10 last">
+    <div class="content">
+        <div class="box header">
+            <div class="head"><div></div></div>
+            <h2>Quảng cáo</h2>
+            <div class="desc">
+                <form action="" method="post">
+                    <div class="tool">
+                        <input type="submit" class="btnx" name="btnDel" onclick="return confirm('Bạn có muốn lưu lại không?');" value="Lưu lại" />
+                        <input type="button" name="add" class="btn" value="Thêm quảng cáo" onclick="themQuangCao()" />
+                    </div>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th class="checkbox">
+                                    <input type="checkbox" name="allChk" onclick="selectAll(this, 'ckb');" />All
+                                </th>
+                                <th>STT</th>
+                                <th>Hình ảnh</th>
+                                <th>Tên</th>
+                                <th>Link</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                            @for (int i = 0; i < Model.Count(); i++)
+            {
+                                <tr>
+                                    <td class="checkbox">
+                                        <input id="" type="checkbox" class="ckb" name="@i&#46;del" value="@Model[i].id_adv">
+                                        <input type="hidden" name="@i&#46;hdId" value="@Model[i].id_adv">
+                                    </td>
+                                    <td>@(i + 1)</td>
+                                    <td>
+                                        <a href="/admin/quang-cao-chi-tiet-@Lib.VietNamToEnglish(Model[i].ten)-@Model[i].id_adv&#46;html" title="@Model[i].ten">
+                                            @if (Model[i].hinhanh != null)
+                                            {
+                                                <img width="70px" height="70px" src="~/adv/@Model[i].hinhanh" alt="@Model[i].ten" />
+                                            }
+                                            else
+                                            {
+                                                <img width="70px" height="70px" src="/Images/admin/noimage.jpg" alt="@Model[i].ten" />
+                                            }
+                                        </a>
+
+                                    </td>
+                                    <td>
+                                        <a href="/admin/quang-cao-chi-tiet-@Lib.VietNamToEnglish(Model[i].ten)-@Model[i].id_adv&#46;html" title="@Model[i].ten">
+                                            @Model[i].ten
+                                        </a>
+                                    </td>
+                                    <td>@Model[i].link</td>
+                                    <td>
+                                        
+                                        @if (Model[i].trangthai == true)
+                                        {
+                                            <input type="radio" name="radTT" checked="checked" value="@Model[i].id_adv" />
+                                        }
+                                        else
+                                        {
+                                            <input type="radio" name="radTT" value="@Model[i].id_adv" />
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <div class="bottom"><div></div></div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function selectAll(invoker, className) {
+        var inputElements = document.getElementsByClassName(className);
+        for (var i = 0; i < inputElements.length; i++) {
+            var myElement = inputElements[i];
+            if (myElement.type === "checkbox") {
+                myElement.checked = invoker.checked;
+            }
+        }
+    }
+
+    function themQuangCao() {
+        window.location.href = "/admin/them-quang-cao.html";
+    }
+</script>

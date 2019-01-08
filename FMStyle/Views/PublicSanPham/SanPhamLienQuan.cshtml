@@ -1,0 +1,27 @@
+﻿@using FMStyle.Models;
+@using FMStyle.Libraries;
+@using FMStyle.Config;
+@model List<san_pham>
+
+<div class="product">
+    @foreach (var item in Model)
+            {
+        <div class="productItem">
+            <a href="/thong-tin-san-pham-@Lib.VietNamToEnglish(item.ten_sanpham)-@item.id_sanpham&#46;html" title="@item.ten_sanpham">
+                <span class="product-img">
+                    <img class="hinhsp" height="350" width="275" alt="@item.ten_sanpham" src="/uploads/@item.hinhanh" style="display: block;">
+                </span>
+                <span class="productName">@Lib.catChuoi(item.ten_sanpham, Conf.NAME_PRODUCT_LENGTH)</span>
+                <br>
+                <span class="price">
+                    @if (item.khuyenmai == true)
+                    {
+                        decimal gia = ((100 - Convert.ToInt32(ViewBag.khuyenMai)) * item.gia) / 100;
+                        <span style="color:Red;"><del>@Lib.convertToVietNamDong(gia)</del>&nbsp;&nbsp;&nbsp;</span>
+                    }
+                    @Lib.convertToVietNamDong(item.gia)
+                </span>
+            </a>
+        </div>
+    }
+</div>

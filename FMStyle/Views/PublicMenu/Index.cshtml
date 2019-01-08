@@ -1,0 +1,30 @@
+﻿@using FMStyle.Models;
+@using FMStyle.Libraries;
+@model List<List<danhmuc>>
+
+<ul id="mega-menu-tut" class="menu">
+    <li class=""><a href="/">Trang chủ</a></li>
+    <li class="dc-mega-li">
+        <a href="#" class="dc-mega">Sản phẩm<span class="dc-mega-icon"></span></a>
+        <div class="sub-container mega" style="left: 0px; top: 40px; z-index: 1000; background-color:#fff; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+            <ul class="sub" style="display: none;">
+                @foreach (List<danhmuc> items in Model)
+                {
+                    <li class="menu-item-1 mega-hdr" style="height: 250px; ">
+                        <a href="javascript: void(0)" class="mega-hdr-a" style="height: 12px;">@items[0].ten_danhmuc</a>
+                        <ul>
+
+                            @for (int i = 1; i < items.Count(); i++)
+                            {
+                                <li class=""><a href="/san-pham-@Lib.VietNamToEnglish(items[i].ten_danhmuc)-@items[i].id_danhmuc&#46;html">@items[i].ten_danhmuc</a></li>
+                            }
+                        </ul>
+                    </li>
+                }
+            </ul>
+        </div>
+    </li>
+
+    <li class=""><a href="/gioi-thieu.html">Giới thiệu</a></li>
+    <li><a href="/lien-he.html">Liên hệ</a></li>
+</ul>

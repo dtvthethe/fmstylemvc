@@ -1,0 +1,15 @@
+﻿@using FMStyle.Areas.Admin.Models;
+@using FMStyle.Libraries;
+@model MLogin
+
+@if (Model != null)
+{
+    <span> Chào </span><span class="strong">
+        <span id="lbHi"><a href="/admin/nguoi-dung-thong-tin-@Lib.VietNamToEnglish(Model.name)-@Model.id&#46;html">@Model.name</a></span>
+    </span><span>|</span>
+    <a href= "/admin/dang-xuat-he-thong.html" id="lbLog">Logout</a>
+}
+else
+{
+    <a href="/admin/dang-nhap-he-thong.html">Đăng nhập</a>
+}

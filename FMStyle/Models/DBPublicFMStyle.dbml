@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="fmstyledb" Class="DBPublicFMStyleDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=fmstyledb.mssql.somee.com;Initial Catalog=fmstyledb;Persist Security Info=False;User ID=dtvthe_SQLLogin_1;Packet Size=4096;Workstation ID=fmstyledb.mssql.somee.com" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="fmstyledbConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.danhmuc" Member="danhmucs">
+    <Type Name="danhmuc">
+      <Column Name="id_danhmuc" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ten_danhmuc" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="groupdanhmuc" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="danhmuc_san_pham" Member="san_phams" ThisKey="id_danhmuc" OtherKey="id_danhmuc" Type="san_pham" />
+    </Type>
+  </Table>
+  <Table Name="dbo.view_lienhe" Member="view_lienhes">
+    <Type Name="view_lienhe">
+      <Column Name="id_view_lienhe" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="id_lienhe" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="id_user" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="lien_he_view_lienhe" Member="lien_he" ThisKey="id_lienhe" OtherKey="id_lienhe" Type="lien_he" IsForeignKey="true" />
+      <Association Name="nguoidung_view_lienhe" Member="nguoidung" ThisKey="id_user" OtherKey="id_user" Type="nguoidung" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.dat_hang" Member="dat_hangs">
+    <Type Name="dat_hang">
+      <Column Name="id_dathang" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="id_user" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="id_pt" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="trang_thai" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ngaydathang" Type="System.DateTime" DbType="SmallDateTime NOT NULL" CanBeNull="false" />
+      <Association Name="dat_hang_dat_hang_detail" Member="dat_hang_details" ThisKey="id_dathang" OtherKey="id_dathang" Type="dat_hang_detail" />
+      <Association Name="nguoidung_dat_hang" Member="nguoidung" ThisKey="id_user" OtherKey="id_user" Type="nguoidung" IsForeignKey="true" />
+      <Association Name="phuong_thuc_thanh_toan_dat_hang" Member="phuong_thuc_thanh_toan" ThisKey="id_pt" OtherKey="id_pt" Type="phuong_thuc_thanh_toan" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.dat_hang_detail" Member="dat_hang_details">
+    <Type Name="dat_hang_detail">
+      <Column Name="id_dathang_detail" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="id_sanpham" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="id_dathang" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="soluong" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="size" Type="System.String" DbType="VarChar(2)" CanBeNull="true" />
+      <Association Name="dat_hang_dat_hang_detail" Member="dat_hang" ThisKey="id_dathang" OtherKey="id_dathang" Type="dat_hang" IsForeignKey="true" />
+      <Association Name="san_pham_dat_hang_detail" Member="san_pham" ThisKey="id_sanpham" OtherKey="id_sanpham" Type="san_pham" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.khuyenmai" Member="khuyenmais">
+    <Type Name="khuyenmai">
+      <Column Name="id_khuyenmai" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ten_khuyenmai" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="giatri" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.lien_he" Member="lien_hes">
+    <Type Name="lien_he">
+      <Column Name="id_lienhe" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="hoten" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="email" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="sdt" Type="System.String" DbType="NVarChar(11)" CanBeNull="true" />
+      <Column Name="noidung" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="ngaygui" Type="System.DateTime" DbType="SmallDateTime" CanBeNull="true" />
+      <Column Name="diachi" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Association Name="lien_he_view_lienhe" Member="view_lienhes" ThisKey="id_lienhe" OtherKey="id_lienhe" Type="view_lienhe" />
+    </Type>
+  </Table>
+  <Table Name="dbo.nguoidung" Member="nguoidungs">
+    <Type Name="nguoidung">
+      <Column Name="id_user" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="username" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="password" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="hoten" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="sdt" Type="System.String" DbType="VarChar(11)" CanBeNull="true" />
+      <Column Name="diachi" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="role" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="email" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Association Name="nguoidung_view_lienhe" Member="view_lienhes" ThisKey="id_user" OtherKey="id_user" Type="view_lienhe" />
+      <Association Name="nguoidung_dat_hang" Member="dat_hangs" ThisKey="id_user" OtherKey="id_user" Type="dat_hang" />
+      <Association Name="role_nguoidung" Member="role1" ThisKey="role" OtherKey="id_role" Type="role" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.phuong_thuc_thanh_toan" Member="phuong_thuc_thanh_toans">
+    <Type Name="phuong_thuc_thanh_toan">
+      <Column Name="id_pt" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ten_phuongthuc" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="chitiet" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="phuong_thuc_thanh_toan_dat_hang" Member="dat_hangs" ThisKey="id_pt" OtherKey="id_pt" Type="dat_hang" />
+    </Type>
+  </Table>
+  <Table Name="dbo.quangcao" Member="quangcaos">
+    <Type Name="quangcao">
+      <Column Name="id_adv" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ten" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="link" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="hinhanh" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="trangthai" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.role" Member="roles">
+    <Type Name="role">
+      <Column Name="id_role" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="role" Member="role1" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="truycap_cms" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="special" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="role_nguoidung" Member="nguoidungs" ThisKey="id_role" OtherKey="role" Type="nguoidung" />
+    </Type>
+  </Table>
+  <Table Name="dbo.san_pham" Member="san_phams">
+    <Type Name="san_pham">
+      <Column Name="id_sanpham" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ten_sanpham" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="soluong" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="hinhanh" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="id_danhmuc" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="tt_chitiet" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="ngaydang" Type="System.DateTime" DbType="SmallDateTime NOT NULL" CanBeNull="false" />
+      <Column Name="gia" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="khuyenmai" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="san_pham_dat_hang_detail" Member="dat_hang_details" ThisKey="id_sanpham" OtherKey="id_sanpham" Type="dat_hang_detail" />
+      <Association Name="danhmuc_san_pham" Member="danhmuc" ThisKey="id_danhmuc" OtherKey="id_danhmuc" Type="danhmuc" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.slide" Member="slides">
+    <Type Name="slide">
+      <Column Name="id_slide" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="hinhanh" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="link" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="vitri" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

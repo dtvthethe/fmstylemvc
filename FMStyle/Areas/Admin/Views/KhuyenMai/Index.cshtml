@@ -1,0 +1,32 @@
+﻿@model int
+@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+
+<div class="space"></div>
+@Html.Raw(ViewBag.error)
+
+<div class="col w10 last">
+    <div class="content">
+        <div class="box header" style="background-color:#fff">
+            <div class="head"><div></div></div>
+            <h2>Khuyến mãi</h2>
+            <div class="desc">
+                <form action="" method="post">
+                    <div style="text-align: center; height:200px">
+                        <p style="font-size: 12px; margin-top:100px">
+                            Phần trăm khuyến mãi hiện tại là:
+                            <input type="number" maxlength="2" min="1" max="100" name="txtKhuyenMai" value="@Model" class="text w_20" required/>
+                            %
+                            <input type="submit" name="btnKhuyenMai" class="btn" value="Lưu lại" />
+                        </p>
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="bottom"><div></div></div>
+        </div>
+    </div>
+</div>

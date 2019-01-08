@@ -1,0 +1,48 @@
+﻿@using FMStyle.Areas.Admin.Models;
+@model List<danhmuc>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+<div class="space"></div>
+@Html.Raw(ViewBag.error)
+<div class="col w10 last">
+    <div class="content">
+        <div class="box header">
+            <div class="head"><div></div></div>
+            <h2>Thêm danh mục con</h2>
+            <div class="desc">
+                <form action="" method="post">
+                    <table>
+
+                        <tr>
+                            <td style="width: 139px">Tên danh mục con:</td>
+                            <td>
+                                <input type="text" id="txtTen" name="txtTen" class="text w_20" maxlength="100" width="200" required />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="width: 139px">Danh mục cha:</td>
+                            <td>
+                                <select name="cmbDanhMuc" class="cmb">
+                                    @foreach (var item in Model)
+                                    {
+                                        double va = Convert.ToDouble(item.groupdanhmuc) + 0.1;
+                                        <option value="@va">@item.ten_danhmuc</option>
+                                    }
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 139px"></td>
+                            <td>
+                                <input type="submit" name="btnAdd" value="Thêm danh mục" class="btn" />
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="bottom"><div></div></div>
+        </div>
+    </div>
+</div>

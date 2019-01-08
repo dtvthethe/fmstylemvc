@@ -1,0 +1,41 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+<div class="space"></div>
+@Html.Raw(ViewBag.error)
+
+<div class="col w10 last">
+    <div class="content">
+        <div class="box header">
+            <div class="head"><div></div></div>
+            <h2>Thêm phương thức thanh toán</h2>
+            <div class="desc">
+<form action="" method="post">
+    <table>
+        <tr>
+            <td>Tên phương thức:</td>
+            <td>
+                <input id="txtTen" name="txtTen" maxlength="100" type="text" class="text w_20" width="200" required />
+            </td>
+        </tr>
+        <tr>
+            <td>Chi tiết:</td>
+            <td>
+                <textarea id="ckeditor" class="ckeditor" name="txtChiTiet"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" name="btnThem" class="btn" value="Thêm phương thức" />
+            </td>
+        </tr>
+    </table>
+</form>
+            </div>
+            <div class="bottom"><div></div></div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/ckeditor/ckeditor.js"></script>

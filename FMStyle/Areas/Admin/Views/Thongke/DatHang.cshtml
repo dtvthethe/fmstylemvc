@@ -1,0 +1,32 @@
+﻿@using FMStyle.Areas.Admin.Models;
+@using FMStyle.Libraries;
+@model List<dat_hang>
+
+<div style="overflow: auto; height: 450px">
+    @ViewBag.error
+    <table>
+        <tbody>
+            <tr>
+                <th class="stt">STT</th>
+                <th class="">Họ và tên</th>
+                <th class="">Ngày đặt hàng</th>
+            </tr>
+        </tbody>
+        <tbody>
+            @for (int i = 0; i < Model.Count(); i++)
+            {
+                <tr>
+                    <td>@(i + 1)</td>
+                    <td>
+                        <a href="/admin/thanh-toan-san-pham-@Model[i].id_dathang&#46;html">
+                            @Model[i].nguoidung.hoten
+                        </a>
+                    </td>
+                    <td>
+                            @Model[i].ngaydathang
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,40 @@
+﻿@using FMStyle.Libraries;
+@using FMStyle.Models;
+@using FMStyle.Config;
+@model List<MSanPham>
+@{
+    Layout = "~/Views/Shared/PublicTemplate.cshtml";
+}
+<h4><a style="color:#01c4c4" href="/">Trang chủ</a>/ Sản phẩm</h4>
+<div id="cont">
+    <div class="title">
+        <h3 class="title-names">
+            <span>Tìm kiếm từ khóa "@ViewBag.key"</span>
+        </h3>
+    </div>
+    <div class="clr"></div>
+    <div class="product">
+        @foreach (var item in Model)
+            {
+            <div class="productItem">
+                <a href="/thong-tin-san-pham-@Lib.VietNamToEnglish(item.ten_sanpham)-@item.id_sanpham&#46;html" title="@item.ten_sanpham">
+                    <span class="product-img">
+                        <img class="hinhsp" height="350" width="275" alt="@item.ten_sanpham" src="/uploads/@item.hinhanh" style="display: block;">
+                    </span>
+                    <span class="productName">@Lib.catChuoi(item.ten_sanpham, Conf.NAME_PRODUCT_LENGTH)</span>
+                    <br>
+                    <span class="price">
+                        @if (item.khuyenmai == true)
+                        {
+                            decimal gia = ((100 - Convert.ToInt32(ViewBag.khuyenMai)) * item.gia) / 100;
+                            <span style="color:Red;"><del>@Lib.convertToVietNamDong(gia)</del>&nbsp;&nbsp;&nbsp;</span>
+                        }
+                        @Lib.convertToVietNamDong(item.gia)
+                    </span>
+                </a>
+            </div>
+        }
+    </div>
+    <div class="clr"></div>
+    @Html.Raw(Lib.pagingPagePublic("/tim-kiem-san-pham-keys-" + ViewBag.key + "-" + @ViewBag.idCat, @ViewBag.sum, @ViewBag.page))
+</div>

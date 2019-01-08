@@ -1,0 +1,33 @@
+﻿@using FMStyle.Areas.Admin.Models;
+@using FMStyle.Libraries;
+@model List<san_pham>
+<div style="overflow: auto; height: 450px">
+    @ViewBag.error
+    <table>
+        <tbody>
+            <tr>
+                <th class="stt">STT</th>
+                <th class="">Hình ảnh</th>
+                <th class="">Tên sản phẩm</th>
+            </tr>
+        </tbody>
+        <tbody>
+            @for (int i = 0; i < Model.Count(); i++)
+            {
+                <tr>
+                    <td>@(i+1)</td>
+                    <td>
+                        <a href="/admin/thong-tin-san-pham-@Lib.VietNamToEnglish(Model[i].ten_sanpham)-@Model[i].id_sanpham&#46;html">
+                            <img style="" width="70px" height="70px" alt="" src="/uploads/@Model[i].hinhanh">
+                        </a>
+                    </td>
+                    <td>
+                        <a href="/admin/thong-tin-san-pham-@Lib.VietNamToEnglish(Model[i].ten_sanpham)-@Model[i].id_sanpham&#46;html">
+                            @Model[i].ten_sanpham
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

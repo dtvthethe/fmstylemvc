@@ -1,0 +1,167 @@
+﻿@using FMStyle.Models;
+@using FMStyle.Config;
+@using FMStyle.Libraries;
+@model san_pham
+@{
+    Layout = "~/Views/Shared/PublicTemplate.cshtml";
+}
+
+<h4><a style="color:#01c4c4" href="/">Trang chủ</a>/ Thông tin sản phẩm</h4>
+<div class="title">
+    <h3 class="title-names">@Model.ten_sanpham</h3>
+</div>
+<div class="product-top">
+    <div class="product-top-l">
+        <img src="/uploads/@Model.hinhanh" alt="@Model.ten_sanpham" class="img-product-top hinhsp" height="350" width="275" style="display: block;" id="imgsp" />
+    </div>
+    <div class="product-top-r">
+        <h3 class="product-top-rh3">BẠN MUỐN MUA SẢN PHẨM NÀY ? </h3>
+        <form action="" method="post">
+            <table class="tb-product-top">
+                <tr>
+                    <td class="tbproduct-ti">Tên sản phẩm:</td>
+                    <td style="color: #01c4c4" class="tbproduct-no">
+                        @Model.ten_sanpham
+                    </td>
+                </tr>
+                <tr>
+                    <td>Gía sản phẩm: </td>
+                    <td style="color: #01c4c4">
+                        @if (Model.khuyenmai == true)
+                        {
+                            int percent = 100 - Convert.ToInt32(ViewBag.khuyenMai);
+                            decimal gia = (Model.gia * percent) / 100;
+                            <del style="color:red">@Lib.convertToVietNamDong(Model.gia)</del>
+                            @Lib.convertToVietNamDong(gia);
+                        }
+                        else
+                        {
+                            @Lib.convertToVietNamDong(Model.gia);
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>Tình trạng:</td>
+                    <td style="color: #01c4c4">
+                        @if (Model.soluong == 0)
+                        {
+                            <span style="color: red">Hết hàng</span>
+                        }
+                        else if (Model.soluong <= 5)
+                        {
+                            <span>Còn rất ít</span>
+                        }
+                        else
+                        {
+                            <span>Còn hàng</span>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>Chọn Size: </td>
+                    <td>
+                        <select name="cmbSize" id="cmbSize" style="height: 28px; width: 100%;">
+                            @foreach (string item in Lib.SIZE_CL)
+                            {
+                                <option value="@item">@item</option>
+                            }
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Số lượng:</td>
+                    <td>
+                        <input type="number" name="txtSoLuong" id="txtSoLuong" value="1" min="1" max="100" maxlength="2" style="height: 29px; width: 100%" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+            @if (Model.soluong != 0)
+            {
+                <input type="button" name="btnMua" class="buy" value="Mua ngay !" onclick="buyClick()" />
+            }
+            else
+            {
+                <input type="button" name="btnHethang" class="buy" style="background-color: #ff8000" value="Tạm &ldquo;hết hàng&rdquo;" />
+            }
+
+        </form>
+    </div>
+</div>
+<div class="clr"></div>
+<div class="product-bottom">
+    <ul class="title" style="padding-left: 0px">
+        <li>
+            <input type="button" class="btn" title="Thông tin" id="btntt" onclick="loadnoidung();" value="Thông tin" />
+        </li>
+        <li>
+            <input type="button" class="btn" title="Sản phẩm cùng loại" id="spcungloai" onclick="loadsplienquan();" value="Sản phẩm cùng loại" />
+        </li>
+    </ul>
+
+    <div id="noidung">
+        @Html.Raw(Model.tt_chitiet);
+    </div>
+</div>
+<script type="text/javascript">
+
+    // Ajax load product containt and product by id category:
+    $(".btn").click(function () {
+        $("#noidung").html("<img src='../images/public/ajax-loader.gif' style='margin-left: 550px' />");
+    });
+
+    function loadnoidung() {
+        $.ajax({
+            type: "POST",
+            url: "PublicSanPham/NoiDungSanPham",
+            data: { id: @Model.id_sanpham },
+            success: function (data) {
+                $("#noidung").html(data);
+            }
+        })
+    }
+
+    function loadsplienquan() {
+        $.ajax({
+            type: "POST",
+            url: "PublicSanPham/SanPhamLienQuan",
+            data: { idCat: @Model.id_danhmuc, idPro: @Model.id_sanpham },
+            success: function (data) {
+                $("#noidung").html(data);
+            }
+        })
+    }
+    // on buy click:
+
+    function buyClick(){
+        var size = $('#cmbSize').val();
+        var soLuong = $('#txtSoLuong').val();
+        $.ajax({
+            type: "POST",
+            url: "Cart/ThemSanPhamVaoGioHang",
+            data: { idPro: @Model.id_sanpham, size: size, soLuong: soLuong },
+            success: function (data) {
+                Messenger().post({
+                    message: data,
+                    hideAfter: 2,
+                    hideOnNavigate: true
+                });
+                getCountCart();
+            }
+        })
+    }
+
+    function getCountCart() {
+        $.ajax({
+            type: "POST",
+            url: "Cart/CountProductCart",
+            success: function (data) {
+                $("#lbCountCart").html(data);
+            }
+        })
+    }
+
+</script>

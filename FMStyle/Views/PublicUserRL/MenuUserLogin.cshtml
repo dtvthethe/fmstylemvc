@@ -1,0 +1,22 @@
+﻿@{
+    int countOrder = Convert.ToInt32(ViewBag.countOrder);
+    string hoTen = ViewBag.hoTen;
+ }
+
+@if (hoTen != "")
+{
+    <li class="top-menu-right-item"><a class="link-menutop-right" href="/thong-tin-ca-nhan.html" title="@hoTen">
+        <span id="lbTen">
+        @hoTen
+        @if (countOrder > 0)
+        {
+            <span style="background-color: red; border: 0px none; padding: 1px 3px; color: #fff; margin-left: 1px; font-size: 12px; border-radius: 4px">@countOrder</span>
+        }
+        </span></a>
+    </li>
+    <li class="top-menu-right-item"><a class="link-menutop-right" href="/dang-xuat.html" title="Đăng xuất"><span id="lbDangXuat">Đăng xuất</span></a></li>
+}
+else {
+    <li class="top-menu-right-item"><a class="link-menutop-right" href="javascript: void(0)" title="Hi!"><span id="lbTen">Chào khách</span></a></li>
+    <li class="top-menu-right-item"><a class="link-menutop-right" href="/dang-nhap.html" title="Đăng nhập"><span id="lbDangNhap">Đăng nhập</span></a></li>
+}

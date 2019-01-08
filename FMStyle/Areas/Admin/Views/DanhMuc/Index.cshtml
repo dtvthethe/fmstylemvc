@@ -1,0 +1,152 @@
+﻿@using FMStyle.Areas.Admin.Models;
+@using FMStyle.Libraries;
+@model List<object>
+@{
+    List<danhmuc> listParent = (List<danhmuc>)Model[0];
+    List<danhmuc> listChirdrent = (List<danhmuc>)Model[1];
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+<div class="space"></div>
+@Html.Raw(ViewBag.error)
+
+<div class="col w10 last">
+    <div class="content">
+        <div class="box header">
+            <div class="head"><div></div></div>
+            <h2>Level1: Danh mục cha:</h2>
+            <div class="desc">
+                <form action="" method="post">
+                    <div class="tool">
+                        <input type="submit" class="btnx" name="btnDelPar" onclick="return confirm('Bạn có muốn xóa các danh mục đã chọn không?');" value="Xóa" />
+                        <input type="button" name="addDMCha" class="btn" value="Thêm danh mục cha" onclick="btn_ThemParentClick()" />
+                    </div>
+                    @*<h3>Level1: Danh mục cha:</h3>*@
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th class="checkbox">
+                                    <input type="checkbox" name="chkAllPar" onclick="selectAll(this, 'ckbPar');" />All
+                                </th>
+                                <th class="stt">STT</th>
+                                <th class="hinhanh">Tên danh mục</th>
+                            </tr>
+                            @for (int i = 0; i < listParent.Count; i++)
+            {
+                                <tr>
+                                    <td class="checkbox">
+                                        <input id="" type="checkbox" class="ckbPar" name="@i&#46;par" value="@listParent[i].id_danhmuc">
+                                        <input type="hidden" name="hdParCount" value="@i" />
+                                    </td>
+                                    <td>
+                                        @(i + 1)
+                                    </td>
+                                    <td>
+                                        <a href="/admin/thong-tin-danh-muc-par-@Lib.VietNamToEnglish(listParent[i].ten_danhmuc)-@listParent[i].id_danhmuc&#46;html">@listParent[i].ten_danhmuc</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <div class="bottom"><div></div></div>
+        </div>
+    </div>
+</div>
+
+<hr />
+@*<h3>Level2: Danh mục con:</h3>*@
+<div class="col w10 last">
+    <div class="content">
+        <div class="box header">
+            <div class="head"><div></div></div>
+            <h2>Level2: Danh mục con:</h2>
+            <div class="desc">
+                <form action="" method="post">
+                    <div class="tool">
+                        <input type="submit" class="btnx" name="btnDelChil" onclick="return confirm('Bạn có muốn xóa các danh mục đã chọn không?');" value="Xóa" />
+                        <input type="button" class="btn" name="btnThemdanhmuccon" value="Thêm danh mục con" onclick="btn_ThemChilClick()" />
+                    </div>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th class="checkbox">
+                                    <input type="checkbox" name="checkbox" value="all" id="ckbAllChil" onclick="selectAll(this, 'ckhChil');"></input>All
+                                </th>
+                                <th class="stt">STT</th>
+                                <th class="hinhanh">Tên danh mục</th>
+                                <th class="hinhanh">
+                                    Xem theo:
+                                    <select name="cmbDanhMucCha" id="cmbDanhMucCha" class="cmb">
+                                        @foreach (var item in listParent)
+                                        {
+                                            <option value="@item.groupdanhmuc">@item.ten_danhmuc</option>
+                                        }
+                                    </select>
+                                </th>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <img id="imgLoadingAjax" style="display:none" src="~/Images/admin/ajax-loader.gif" alt="Lodding..." />
+                    <table id="tbChildrent">
+
+                        @for (int i = 0; i < listChirdrent.Count; i++)
+            {
+                            <tr>
+                                <td class="stt">
+                                    <input id="" type="checkbox" class="ckhChil" name="@i&#46;chil" value="@listChirdrent[i].id_danhmuc">
+                                    <input type="hidden" name="hdChilCount" value="@i" />
+                                </td>
+                                <td class="stt"><span>@(i + 1)</span></td>
+                                <td class="hinhanh"><a href="/admin/danh-muc-thong-tin-chil-@Lib.VietNamToEnglish(listChirdrent[i].ten_danhmuc)-@listChirdrent[i].id_danhmuc&#46;html">@listChirdrent[i].ten_danhmuc</a></td>
+                                <td class="hinhanh"></td>
+                            </tr>
+                        }
+
+                    </table>
+                </form>
+            </div>
+            <div class="bottom"><div></div></div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    // select cmbDanhMuc:
+    $("select#cmbDanhMucCha").change(function () {
+        var id = $("#cmbDanhMucCha :selected").val();
+        loadChildrent(id);
+    });
+    function loadChildrent(id) {
+        document.getElementById("imgLoadingAjax").style.display = "block";
+
+        $.ajax({
+            type: "POST",
+            url: "DanhMuc/AjaxLoadChildrent",
+            data: { id: id },
+            success: function (data) {
+                document.getElementById("imgLoadingAjax").style.display = "none";
+                $("#tbChildrent").html(data);
+            }
+        });
+    }
+    function btn_ThemParentClick() {
+        window.location.href = "/admin/them-danh-muc-par.html";
+    }
+    function btn_ThemChilClick() {
+        window.location.href = "/admin/them-danh-muc-chi.html";
+    }
+
+    // check / uncheck all checkbox
+    function selectAll(invoker, className) {
+        var inputElements = document.getElementsByClassName(className);
+
+        for (var i = 0; i < inputElements.length; i++) {
+            var myElement = inputElements[i];
+            if (myElement.type === "checkbox") {
+                myElement.checked = invoker.checked;
+            }
+        }
+    }
+</script>

@@ -1,0 +1,290 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>@ViewBag.Title</title>
+    <link id="page_favicon" type="image/x-icon" rel="icon" href="~/Images/public/favicon.ico" />
+    <meta charset="UTF-8" />
+    <link href="~/Content/public/loader.css" type="text/css" rel="stylesheet" />
+    <link href="~/Content/public/style.css" type="text/css" rel="stylesheet" />
+    <link href="~/Content/public/menustyle.css" rel="stylesheet" />
+    <link href="~/Content/public/styleslide.css" type="text/css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-2.2.3.min.js"></script>
+    @*messenger*@
+    <link href="~/Libraries/messenger/css/messenger.css" rel="stylesheet" />
+    <link href="~/Libraries/messenger/css/messenger-theme-flat.css" rel="stylesheet" />
+    @*messenger*@
+
+</head>
+<body>
+    <!-- Loadder -->
+    <div id="loader" class="displaynone">
+        <div class="loader">
+            <div class="position-center-center">
+                <img width="100" src="~/Images/public/01-progress.gif" alt="Kiyomi" title="kiyomi">
+                <p class="font-merriweather font-italic text-center">Please Wait...</p>
+                <div class="loaderContainer">
+                    <div class="loaderBG"> <span class="loaderCircle"></span> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Loadder -->
+    <a href="top"></a>
+    <a class="totop" title="Back to Top" href="#top">&uarr;</a>
+        <div class="top">
+            <div class="topmenu">
+                <div class="top-left">
+                    <ul class="top-menu">
+                        <li class="top-menu-item"><a class="link-menutopse" href="/" title="FM Style">FM Style</a></li>
+                        <li class="top-menu-item"><a class="link-menutop" href="/huong-dan-mua-hang.html" title="Hướng dẫn mua hàng">Hướng dẫn mua hàng</a></li>
+                        <li class="top-menu-item"><a class="link-menutop" href="/chinh-sach-mua-hang.html" title="Chính sách mua hàng">Chính sách mua hàng</a></li>
+                    </ul>
+                </div>
+                <div class="top-right">
+                    <ul class="top-menu">
+
+                        <li class="top-menu-right-item">
+                            <a class="link-menutop-right" href="javascript:void(0)" title="Giỏ hàng" onclick="cartClick()">
+                                Giỏ hàng
+                                <span id="lbCountCart">@Html.Action("CountProductCart", "Cart")</span>
+                            </a>
+                        </li>
+                       @Html.Action("MenuUserLogin", "PublicUserRL")
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="clr"></div>
+        <div class="wrapper">
+            <div class="space"></div>
+            <div class="header">
+                <div class="header-left">
+                    <a href="/" title="FM Style">
+                        <img src="~/Images/public/logo.png" alt="FM STYLE">
+                    </a>
+
+                </div>
+                <div class="header-middle">
+                    <div class="search_bar">
+                        @Html.Action("MenuSearch", "PublicMenu", new { @current = ViewBag.idCat})
+                        <input class="txtSearch" id="txtSearch" placeholder="Nhập vào tên sản phẩm..." type="text" value="@ViewBag.key" />
+                        <input class="btnSearch" id="btnSearch" type="button" value="Tìm kiếm" title="Tìm kiếm" onclick="loadsptimkiem();" />
+                        <ul id="result-search" style="display:none">
+                            <li><img src="/Images/public/ajax-loader.gif" alt="Loading..." /></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="header-right"></div>
+                <div class="clr"></div>
+                <div class="dcjq-mega-menu">
+                    @Html.Raw(Html.Action("Index","PublicMenu"))
+                </div>
+
+            </div>
+            <div class="clr"></div>
+            <div class="containt">
+                @RenderBody()
+            </div>
+            <div class="clr"></div>
+            <div class="footer">
+                <div class="footer-menu">
+
+                    <div class="clearfix">
+                        <dl class="col-md-4">
+                            <dt>về chúng tôi</dt>
+                            <dd>
+                                <a href="/lien-he.html">Liên hệ</a>
+                            </dd>
+                            <dd>
+                                <a href="/dieu-khoan-su-dung.html">Điều khoản sử dụng</a>
+                            </dd>
+                            <dd>
+                                <a href="/chinh-sach-bao-hanh.html">Chính sách bảo hành</a>
+                            </dd>
+                            <dd>
+                                <a href="/chinh-sach-bao-mat.html">Chính sách bảo mật thông tin</a>
+                            </dd>
+                        </dl>
+                        <dl class="col-md-4">
+                            <dt>trợ giúp</dt>
+                            <dd>
+                                <a href="/hoi-dap.html">Hỏi đáp</a>
+                            </dd>
+                            <dd>
+                                <a href="/huong-dan-mua-hang.html">Hướng dẫn mua hàng</a>
+                            </dd>
+
+                            <dd>
+                                <a href="/lien-he.html">Góp ý - Ý kiến khách hàng</a>
+                            </dd>
+                            <dd>
+                                <a title="mua hang gia re, mua hang online" href="/">Mua hàng giá rẻ</a>
+                            </dd>
+                        </dl>
+                        <dl class="col-md-4">
+                            <dt>hợp tác</dt>
+                            <dd>
+                                <a href="/hop-tac.html">Hợp tác kinh doanh</a>
+                            </dd>
+                            <dd>
+                                <a href="/lien-he-hop-tac.html">Liên hệ hợp tác</a>
+                            </dd>
+                            <dd>
+                                <a href="/tuyen-dung.html">Tuyển dụng</a>
+                            </dd>
+                        </dl>
+                    </div>
+
+                </div>
+
+                <div class="footer-address">
+                    <div class="footer-address-left">
+                        <h3 class="footer-address-h3">LIÊN HỆ VỚI CHÚNG TÔI HỆ THỐNG SHOP THỜI TRANG FM STYLE</h3>
+                        <ul class="footer-address-ul">
+                            <li class="footer-address-li">415-417 Lê Duẩn, Q. Thanh Khê</li>
+                            <li class="footer-address-li">236 Lê Duẩn, Q. Thanh Khê</li>
+                            <li class="footer-address-li">81 Phan Đăng Lưu, Q. Hải Châu</li>
+                            <li class="footer-address-li">125 Nguyễn Lương Bằng, Q. Liên Chiểu</li>
+                            <li class="footer-address-li">36 Âu Cơ, Q. Liên Chiểu</li>
+                            <li class="footer-address-li">173 Bà Triệu, Thành Phố Huế</li>
+                            <li class="footer-address-li">132 Phan Châu Trinh, Tam Kỳ</li>
+                        </ul>
+                    </div>
+                    <div class="footer-address-right">
+                        <div class="sdt">
+                            <ul>
+                                <li>Hot Line:<span style="color: #01c4c4">05116.566.236</span>(Đà Nẵng)</li>
+                                <li>Thông tin giá sỉ:<span style="color: #01c4c4">0947513579</span></li>
+                            </ul>
+                        </div>
+                        <div class="social">
+                            <div class="social-cotaint">
+
+                                <dl class="col-md-5">
+                                    <dt>FOLLOW US</dt>
+                                    <dd>
+                                        <a href="http://facebook.com/">Facebook</a>
+                                    </dd>
+                                    <dd>
+                                        <a href="http://google.com/">Google+</a>
+                                    </dd>
+                                    <dd>
+                                        <a href="http://twitter.com/">Twitter</a>
+                                    </dd>
+
+
+                                </dl>
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    Copyright 2009-2014 All rights reserved. FMStyle.vn
+
+                </div>
+            </div>
+        </div>
+    <script>
+        /*-----------------------------------------------------------------------------------*/
+        /* 	LOADER
+        /*-----------------------------------------------------------------------------------*/
+        $("#loader").delay(500).fadeOut("slow");
+        /*-----------------------------------------------------------------------------------
+            Animated progress bars
+        /*-----------------------------------------------------------------------------------*/
+        $('.progress-bars').waypoint(function () {
+            $('.progress').each(function () {
+                $(this).find('.progress-bar').animate({
+                    width: $(this).attr('data-percent')
+                }, 500);
+            });
+        },
+            {
+                offset: '100%',
+                triggerOnce: true
+            });
+
+    </script>
+
+    <script src="~/Scripts/public/browser.js"></script>
+    <script type="text/javascript" src="~/Scripts/public/slide.js"></script>
+    <script src="~/Scripts/public/jquery.dcmegamenu.1.2.js"></script>
+    <script src="~/Scripts/public/jquery.hoverIntent.minified.js"></script>
+    <script src="~/Libraries/messenger/js/messenger.min.js"></script>
+    <script src="~/Libraries/messenger/js/messenger-theme-future.js"></script>
+    <script type="text/javascript">
+        Messenger.options = {
+            extraClasses: 'messenger-fixed messenger-on-top',
+            theme: 'flat'
+        }
+        $(document).ready(function ($) {
+            $('#mega-menu-tut').dcMegaMenu({
+                rowItems: '3',
+                speed: 'fast'
+            });
+        });
+    </script>
+    <script type="text/javascript">
+    // btton timKiem click
+    function loadsptimkiem() {
+        var value = $('#txtSearch').val();
+        var id = $("#cmbSearch").val();
+        if (value != "") {
+            window.location.href = "/tim-kiem-san-pham-keys-" + value + "-" + id + ".html";
+        }
+    }
+
+    // ajax search:
+    function ajaxLoadSearchProduct () {
+        var value = $('#txtSearch').val();
+        var id = $("#cmbSearch").val();
+        if (value != "") {
+            $("#result-search").show();
+            $.ajax({
+                type: "POST",
+                url: "PublicSanPham/AjaxSearch",
+                data: { key: value, id: id },
+                success: function (data) {
+                    $("#result-search").html(data);
+                }
+            })
+        }
+        else {
+            $("#result-search").hide();
+            $("#result-search").html('<li><img src="/Images/public/ajax-loader.gif" alt="Loading..." /></li>');
+        }
+    }
+    // on keyup txtSearch:
+    $("#txtSearch").keyup(function () {
+        ajaxLoadSearchProduct();
+    });
+
+    // on select cmbDanhuc:
+    $("select#cmbSearch").change(function () {
+        ajaxLoadSearchProduct();
+    });
+
+    // on click cart:
+    function cartClick() {
+        var cart = $("#lbCountCart").text();
+        if (cart == "") {
+            Messenger().post({
+                message: "Giỏ hàng trống !",
+                hideAfter: 2,
+                hideOnNavigate: true
+            });
+        }
+        else {
+            window.location.href = "/gio-hang.html";
+        }
+    }
+
+    </script>
+
+</body>
+</html>

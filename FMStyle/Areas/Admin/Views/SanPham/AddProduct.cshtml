@@ -1,0 +1,100 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+@using FMStyle.Areas.Admin.Models;
+@using FMStyle.Libraries;
+@using FMStyle.Config;
+@model List<danhmuc>
+<div class="space"></div>
+@Html.Raw(ViewBag.error)
+
+<div class="col w10 last">
+    <div class="content">
+        <div class="box header">
+            <div class="head"><div></div></div>
+            <h2>Thông tin sản phẩm</h2>
+            <div class="desc">
+<form action="" method="post" enctype="multipart/form-data">
+    <table>
+        <tr>
+            <td>Tên sản phẩm:</td>
+            <td>
+                <input type="text" id="txtTen" class="text w_20" name="txtTen" maxlength="100" style="width:200px" required />
+            </td>
+        </tr>
+        <tr>
+            <td>Số lượng:</td>
+            <td>
+                <input type="number" id="txtSoLuong" class="text w_20" min="0" max="10000" name="txtSoLuong" style="width:200px" required />
+            </td>
+        </tr>
+        <tr>
+            <td>Hình ảnh:</td>
+            <td>
+                <input type="file" id="file" name="file" />
+                <span style="color:red">@ViewBag.file</span>
+            </td>
+        </tr>
+        <tr>
+            <td>Danh mục:</td>
+            <td>
+                <select name="cmbDanhMuc" class="cmb">
+                    @foreach (var item in (List<danhmuc>)ViewBag.DanhMuc)
+                    {
+                    <option value="@item.id_danhmuc">@item.ten_danhmuc</option>
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Thông tin chi tiết:</td>
+            <td>
+                
+                <textarea name="txtThongTinChiTiet" class="ckeditor"></textarea>
+            </td>
+        </tr>
+         <tr>
+            <td>Gía:</td>
+            <td>
+                <input type="text" id="txtGia" class="text w_20"  name="txtGia" style="width:200px" required />
+                =><span id="giaSc"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>Khuyến mãi:</td>
+            <td>
+                <input type="radio" id="chkKhuyenMaiF" name="chkKhuyenMai" value="false" checked="checked"/>
+                <label for="chkKhuyenMaiF">Không</label>
+
+                <input type="radio" id="chkKhuyenMaiT" name="chkKhuyenMai" value="true"/>
+                <label for="chkKhuyenMaiT">Có</label>
+
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" name="btnAdd" class="btn" value="Thêm sản phẩm"/>
+                &nbsp;
+                
+            </td>
+        </tr>
+    </table>
+</form>
+            </div>
+            <div class="bottom"><div></div></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // format vietnamdong:
+    // txt Gia keypress:
+    $('#txtGia').keyup(function () {
+        var txtGia = $('#txtGia').val();
+        var price = txtGia.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")+" VNĐ";
+        $('#giaSc').html(price);
+    });
+
+</script>
+<script src="~/Scripts/ckeditor/ckeditor.js"></script>

@@ -1,0 +1,96 @@
+﻿@using FMStyle.Areas.Admin.Models;
+@using FMStyle.Config;
+@using FMStyle.Libraries;
+@model List<object>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+    List<role> listRole = (List<role>)Model[0];
+    nguoidung us = (nguoidung)Model[1];
+}
+<div class="space"></div>
+@Html.Raw(ViewBag.error)
+<div class="col w10 last">
+    <div class="content">
+        <div class="box header">
+            <div class="head"><div></div></div>
+            <h2>Thông tin người dùng</h2>
+            <div class="desc">
+                <form action="" method="post">
+                    <table>
+                        <tr>
+                            <td style="width: 141px">Tên đăng nhập:</td>
+                            <td>
+                                <input type="text" name="txtTK" value="@us.username" class="text w_20" maxlength="30" readonly="readonly" required>
+                                <input type="hidden" name="idHd" value="@us.id_user" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 141px">Mật khẩu:</td>
+                            <td>
+                                <input type="button" value="Thiết lập lại mật khẩu" class="btn" style="color:#000" name="btnResetPassword" onclick="btn_DoiMK()" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 141px">Họ và Tên:</td>
+                            <td>
+                                <input type="text" name="txtHoTen" value="@us.hoten" class="text w_20" maxlength="100" required>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 141px">Số điện thoại:</td>
+                            <td>
+                                <input type="text" name="txtSDT" value="@us.sdt" class="text w_20" maxlength="11">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 141px">Địa chỉ:</td>
+                            <td>
+                                <textarea name="txtDiaChi" rows="5" cols="50">@us.diachi</textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 141px">Email:</td>
+                            <td>
+                                <input type="email" name="txtEmail" value="@us.email" class="text w_20" maxlength="100">
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 141px">Role:</td>
+                            <td>
+                                <select name="cmbRole" class="cmb">
+                                    @foreach (var item in listRole)
+                                    {
+                                        if (us.role == item.id_role)
+                                        {
+                                            <option value="@item.id_role" selected="selected">@item.role1</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.id_role">@item.role1</option>  
+                                        }
+                                    }
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 141px"></td>
+                            <td>
+                                <input type="submit" name="btnAdd" class="btn" value="Cập nhật" />
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+
+            </div>
+            <div class="bottom"><div></div></div>
+        </div>
+    </div>
+</div>
+<script>
+    function btn_DoiMK() {
+        window.location.href = "/admin/nguoi-dung-doi-mat-khau-@Lib.VietNamToEnglish(us.hoten)-@us.id_user" + ".html";
+    }
+
+</script>

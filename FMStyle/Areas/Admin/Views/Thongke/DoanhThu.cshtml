@@ -1,0 +1,40 @@
+﻿@using FMStyle.Areas.Admin.Models;
+@using FMStyle.Libraries;
+@model List<object>
+@{
+    List<MDonHang> lstDH = (List<MDonHang>)Model[0];
+    decimal tongTien = (decimal)Model[1];
+}
+<div style="overflow: auto; height: 450px">
+    @ViewBag.error
+    <table>
+        <tbody>
+            <tr>
+                <th class="stt">STT</th>
+                <th class="">Họ và tên</th>
+                <th class="">Ngày đặt hàng</th>
+                <th class="">Tổng đơn hàng</th>
+                <th class="">Tổng tiền = <strong style="color:red">@Lib.convertToVietNamDong(tongTien)</strong></th>
+            </tr>
+        </tbody>
+        <tbody>
+            @for (int i = 0; i < lstDH.Count(); i++)
+            {
+                <tr>
+                    <td>@(i + 1)</td>
+                    <td>
+                        <a href="/admin/thanh-toan-san-pham-@lstDH[i].id&#46;html">
+                            @lstDH[i].ten
+                        </a>
+                    </td>
+                    <td>
+                        @lstDH[i].ngayDat
+                    </td>
+                    <td colspan="2">
+                        @Lib.convertToVietNamDong(lstDH[i].gia)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

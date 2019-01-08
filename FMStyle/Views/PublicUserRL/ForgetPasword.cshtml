@@ -1,0 +1,72 @@
+﻿@{
+    Layout = "~/Views/Shared/PublicTemplate.cshtml";
+}
+
+<h4><a style="color: #01c4c4" href="/">Trang chủ</a>/ Quên mật khẩu</h4>
+<div class="title">
+    <h3 class="title-names">Quên mật khẩu</h3>
+</div>
+<fieldset style="margin: 70px auto; border-radius: 7px; border: 1px solid #01c4c4; width: 440px">
+    <legend style="color: #01c4c4; font-weight: bold; margin-left: 15px">Quên mật khẩu</legend>
+
+    <form action="" method="post" onsubmit="return checkPassword()">
+        <table style="padding: 20px; height: 98px;" class="tbTRHeight39">
+            <tr>
+                <td>Tên đăng nhập:</td>
+                <td>
+                    <input type="text" name="txtTK" maxlength="30" class="cinput" height="29" width="200" required="" value="">
+                </td>
+            </tr>
+            <tr>
+                <td>Địa chỉ email:</td>
+                <td>
+                    <input type="email" name="txtEmail" maxlength="100" class="cinput" height="29" width="200" required="" value="">
+                </td>
+            </tr>
+            <tr>
+                <td>Mật khẩu mới:</td>
+                <td>
+                    <input type="password" name="txtPassword1" id="txtPassword1" class="cinput" maxlength="100" height="29" width="200" required />
+                </td>
+            </tr>
+            <tr>
+                <td>Nhập lại mật khẩu mới:	</td>
+                <td>
+                    <input type="password" name="txtPassword2" id="txtPassword2" class="cinput" maxlength="100" height="29" width="200" required />
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 14px"></td>
+                <td style="height: 14px" id="messenger">
+                    @Html.Raw(ViewBag.error)
+                </td>
+            </tr>
+            <tr>
+                <td class="space" style="height: 24px"></td>
+                <td class="space" style="height: 24px">
+                    <input type="submit" name="btnSubmit" value="Xác nhận" class="cinputb" style="width: 101px;">
+                </td>
+            </tr>
+
+        </table>
+    </form>
+</fieldset>
+
+<script>
+    // checl txtPassword1 equals txtPassword2
+    function checkPassword() {
+        var txtPass1 = $("#txtPassword1");
+        var txtPass2 = $("#txtPassword2");
+        if (txtPass1.val() == txtPass2.val()) {
+            return true;
+        }
+        else {
+            $("#messenger").html("<p style = \"font-weight:bold; color:red\">Mật khẩu không trùng nhau</p>");
+            txtPass1.val("");
+            txtPass2.val("");
+            txtPass1.focus();
+            return false;
+        }
+    }
+
+</script>

@@ -1,0 +1,27 @@
+﻿@using FMStyle.Models;
+@using FMStyle.Libraries;
+@model List<MSanPham>
+@foreach (var item in Model)
+{
+<li>
+    <a href="thong-tin-san-pham-@Lib.VietNamToEnglish(item.ten_sanpham)-@item.id_sanpham&#46;html" title="@item.ten_sanpham">
+        <img src="/uploads/@item.hinhanh" alt="@item.ten_sanpham">
+        <span>@item.ten_sanpham</span><br />
+        @if (@item.khuyenmai == true)
+        {
+            int khuyenMai = Convert.ToInt32(ViewBag.khuyenMai);
+            decimal gia = ((100 - khuyenMai) * item.gia) / 100;
+            <del>@Lib.convertToVietNamDong(item.gia)</del>
+            <i>@Lib.convertToVietNamDong(gia)</i>
+        }
+        else
+        {
+            <i>@Lib.convertToVietNamDong(item.gia)</i>
+        }
+
+    </a>
+</li>
+}
+<li>
+    <a href="/tim-kiem-san-pham-keys-@ViewBag.key-@ViewBag.idCat&#46;html" title="@ViewBag.key">Xem thêm kết quả tìm kiếm "@ViewBag.key"</a>
+</li>

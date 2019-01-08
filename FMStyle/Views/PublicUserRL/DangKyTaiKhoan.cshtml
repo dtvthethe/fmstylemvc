@@ -1,0 +1,97 @@
+﻿@{
+    Layout = "~/Views/Shared/PublicTemplate.cshtml";
+}
+<h4><a style="color:#01c4c4" href="/">Trang chủ</a>/ Đăng ký tài khoản</h4>
+<div class="title">
+    <h3 class="title-names">Đăng ký tài khoản</h3>
+</div>
+
+<fieldset style="margin: 70px auto; border-radius:7px; border: 1px solid #01c4c4;width: 500px">
+    <legend style="color:#01c4c4; font-weight:bold; margin-left:15px">Đăng ký tài khoản người dùng</legend>
+    
+    <form action="" method="post" onsubmit="return checkPassword();">
+        <table style="padding: 20px 30px; height: 409px;">
+            <tr>
+                <td class="hinhGioHang" style="width: 728px; height: 23px;"></td>
+                <td style="width: 292px; height: 23px; color:red">
+                    " * " Là trường bắt buộc phải nhập!
+                </td>
+            </tr>
+            <tr>
+                <td class="hinhGioHang" style="width: 728px; height: 48px;">Tên đăng nhập (<span style="color:red">*</span>):</td>
+                <td style="width: 292px; height: 48px;">
+                    <input type="text" name="txtUser" maxlength="30" height="29" width="200" class="cinput" required />
+                </td>
+            </tr>
+            <tr>
+                <td class="td-right-tbLienHe" style="width: 728px">Mật khẩu (<span style="color:red">*</span>):</td>
+                <td style="width: 292px">
+                    <input type="password" name="txtPassword" id="txtPassword" class="cinput" maxlength="100" height="29" width="200" required />
+                </td>
+            </tr>
+            <tr>
+                <td class="td-right-tbLienHe" style="width: 728px">Nhập lại mật khẩu (<span style="color:red">*</span>):</td>
+                <td style="width: 292px">
+                    <input type="password" name="txtPassword2" id="txtPassword2" class="cinput" maxlength="100" height="29" width="200" required />
+                </td>
+            </tr>
+            <tr>
+                <td class="td-right-tbLienHe" style="width: 728px">Họ và tên (<span style="color:red">*</span>):</td>
+                <td style="width: 292px">
+                    <input type="text" name="txtHoTen" maxlength="100" class="cinput" height="29" width="200" required />
+                </td>
+            </tr>
+            <tr>
+                <td class="td-right-tbLienHe" style="width: 728px">Số điện thoại:</td>
+                <td style="width: 292px">
+                    <input type="text" name="txtSDT" maxlength="11" class="cinput" height="29" width="200" pattern="^(0\d{9,10})$" title="Đây không phải là số điện thoại"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="td-right-tbLienHe" style="width: 728px; height: 55px;">Email (<span style="color:red">*</span>):</td>
+                <td style="width: 292px; height: 55px;">
+                    <input type="email" name="txtEmail" maxlength="100" class="cinput" height="29" width="200" required />
+                </td>
+            </tr>
+            <tr>
+                <td class="td-right-tbLienHe" style="width: 728px">Địa chỉ (<span style="color:red">*</span>):</td>
+                <td style="width: 292px">
+                    <textarea name="txtDiaChi" rows="2" cols="20" style="width:300px;" required></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td id="messenger">
+                    @Html.Raw(ViewBag.error)
+                </td>
+
+            </tr>
+            <tr>
+                <td class="td-right-tbLienHe" style="width: 728px"></td>
+                <td style="width: 292px">
+                    <input type="submit" name="btnDangKy" value="Đăng ký" class="cinputb" style="width: 101px;" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</fieldset>
+
+<script>
+    // check passord1 equal password2
+    function checkPassword() {
+        var pass = $("#txtPassword").val();
+        var pass2 = $("#txtPassword2").val();
+
+        if (pass == pass2) {
+            return true;
+        }
+        else {
+            $("#messenger").html("<p style = \"font-weight:bold; color:red\">Mật khẩu không chính xác!</p>");
+            $("#txtPassword").val("");
+            $("#txtPassword").focus();
+            $("#txtPassword2").val("");
+            return false;
+        }
+    }
+
+</script>
